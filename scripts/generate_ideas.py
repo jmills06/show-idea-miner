@@ -121,7 +121,7 @@ def gather_previous_titles():
     return titles
 
 
-def build_user_prompt(items, trends, previous_titles):
+def build_user_prompt(items, trends, previous_titles, competitive):
     lines = ["## Trending terms this week (term: recent mentions, velocity)"]
     if trends:
         for t in trends:
@@ -130,6 +130,15 @@ def build_user_prompt(items, trends, previous_titles):
                          f"velocity {t['velocity']}{flag}")
     else:
         lines.append("(no trend data yet)")
+
+    if competitive:
+        lines.append("\n## What's performing on YouTube in this niche right now"
+                     "\n(competitive research: proven topics, but consider a"
+                     " differentiated angle rather than copying)")
+        for v in competitive[:15]:
+            lines.append(f"- \"{v.get('title','')}\" by {v.get('channel','?')}: "
+                         f"{v.get('views',0):,} views, "
+                         f"{v.get('comments',0):,} comments")
 
     if previous_titles:
         lines.append("\n## Ideas already pitched in recent batches (avoid repeats)")
@@ -237,9 +246,12 @@ def parse_ideas(text):
 def main():
     print("=== Show Idea Miner: Phase 2 generation run ===")
     items = gather_week_of_items()
-    trends = load_json(IDEAS_FILE, {}).get("trends", [])
+    latest = load_json(IDEAS_FILE, {})
+    trends = latest.get("trends", [])
+    competitive = latest.get("competitive", [])
     previous_titles = gather_previous_titles()
     print(f"[gather] {len(items)} items, {len(trends)} trends, "
+          f"{len(competitive)} competitive videos, "
           f"{len(previous_titles)} previous titles")
 
     if not items:
@@ -247,7 +259,7 @@ def main():
         return
 
     system_prompt = SYSTEM_PROMPT.format(ideas_requested=IDEAS_REQUESTED)
-    user_prompt = build_user_prompt(items, trends, previous_titles)
+    user_prompt = build_user_prompt(items, trends, previous_titles, competitive)
     text = call_claude(system_prompt, user_prompt)
     ideas = parse_ideas(text)
 
