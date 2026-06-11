@@ -1,186 +1,97 @@
 {
-  "generated_at": "2026-06-11T02:36:25.423192+00:00",
+  "generated_at": "2026-06-11T14:33:49.518056+00:00",
   "phase": 1,
-  "item_count": 16,
+  "item_count": 7,
   "items": [
     {
-      "id": "rss_198b5c141cf9",
+      "id": "mastodon_116730987590154662",
+      "source": "Mastodon #amateurradio",
+      "title": "Propagaci\u00f3n: El oc\u00e9ano s\u00ed que importa El espejo oculto en las comunicaciones HF\u2026 Para el radioaficionado, el dial y la\u2026",
+      "url": "https://mastodon.social/@u30radioaficionadosleoneses/116730987590154662",
+      "score": 3,
+      "comments": 0,
+      "created_utc": 1781173516,
+      "blurb": "Propagaci\u00f3n: El oc\u00e9ano s\u00ed que importa El espejo oculto en las comunicaciones HF\u2026 Para el radioaficionado, el dial y la ionosfera son el mapa y el territorio. Nuestro mundo gira en torno al ciclo solar, la frecuencia y\u2026"
+    },
+    {
+      "id": "rss_0f9ec28fed68",
       "source": "QRZ Forums",
-      "title": "Ameritron and Mirage coming back !",
-      "url": "https://forums.qrz.com/index.php?threads/ameritron-and-mirage-coming-back.993624/",
+      "title": "Artificial Intelligence",
+      "url": "https://forums.qrz.com/index.php?threads/artificial-intelligence.990604/",
       "score": 0,
       "comments": 0,
-      "created_utc": 1781144646,
+      "created_utc": 1781187047,
       "blurb": ""
     },
     {
-      "id": "rss_a22cdf824c1b",
+      "id": "rss_57f6fe0fd107",
       "source": "QRZ Forums",
-      "title": "SCAM QRZ \"Verification\" message:  IF YOU SEE THIS DO NOT CLICK ANY LINKS",
-      "url": "https://forums.qrz.com/index.php?threads/scam-qrz-verification-message-if-you-see-this-do-not-click-any-links.994040/",
+      "title": "FT8 Killed The Radio Ham",
+      "url": "https://forums.qrz.com/index.php?threads/ft8-killed-the-radio-ham.994081/",
       "score": 0,
       "comments": 0,
-      "created_utc": 1781144254,
+      "created_utc": 1781186719,
       "blurb": ""
     },
     {
-      "id": "rss_ad7817514488",
+      "id": "rss_67fc1411bbed",
       "source": "QRZ Forums",
-      "title": "Lewis&Clark Trail On The Air Event",
-      "url": "https://forums.qrz.com/index.php?threads/lewis-clark-trail-on-the-air-event.993371/",
+      "title": "Importance of Standing Wave Ratio (SWR) in Amateur Radio",
+      "url": "https://forums.qrz.com/index.php?threads/importance-of-standing-wave-ratio-swr-in-amateur-radio.994083/",
       "score": 0,
       "comments": 0,
-      "created_utc": 1781142172,
+      "created_utc": 1781186104,
       "blurb": ""
     },
     {
-      "id": "rss_3ae7a639e09a",
+      "id": "rss_b2229a4e7a8d",
       "source": "QRZ Forums",
-      "title": "K4A AMERICA250 \u2014 2026 Chasing Cornwallis Challenge \u2014 Event #4 of 6",
-      "url": "https://forums.qrz.com/index.php?threads/k4a-america250-%E2%80%94-2026-chasing-cornwallis-challenge-%E2%80%94-event-4-of-6.993822/",
+      "title": "Steppir getting back into the ham antenna business",
+      "url": "https://forums.qrz.com/index.php?threads/steppir-getting-back-into-the-ham-antenna-business.988439/",
       "score": 0,
       "comments": 0,
-      "created_utc": 1781140851,
+      "created_utc": 1781184207,
       "blurb": ""
     },
     {
-      "id": "rss_f1c3ec3a3e26",
+      "id": "rss_db2ef225529c",
       "source": "QRZ Forums",
-      "title": "John \u201cJerry\u201d Chenis, K1KQS, S.K.",
-      "url": "https://forums.qrz.com/index.php?threads/john-%E2%80%9Cjerry%E2%80%9D-chenis-k1kqs-s-k.994049/",
+      "title": "Future of ae7q.com (callsign tools)",
+      "url": "https://forums.qrz.com/index.php?threads/future-of-ae7q-com-callsign-tools.992780/",
       "score": 0,
       "comments": 0,
-      "created_utc": 1781135801,
+      "created_utc": 1781182306,
       "blurb": ""
     },
     {
-      "id": "rss_cbffdc1c94f5",
+      "id": "rss_a5cb6f7036e6",
       "source": "QRZ Forums",
-      "title": "Trials & Errors #79: Our Expensive Hobbies",
-      "url": "https://forums.qrz.com/index.php?threads/trials-errors-79-our-expensive-hobbies.993320/",
+      "title": "6M6M, Anmyon Is. /AS-080",
+      "url": "https://forums.qrz.com/index.php?threads/6m6m-anmyon-is-as-080.994063/",
       "score": 0,
       "comments": 0,
-      "created_utc": 1781130237,
-      "blurb": ""
-    },
-    {
-      "id": "rss_18d0b1228dbe",
-      "source": "QRZ Forums",
-      "title": "10 Worst HF Transceivers of All Time -- Humor",
-      "url": "https://forums.qrz.com/index.php?threads/10-worst-hf-transceivers-of-all-time-humor.993760/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781129666,
-      "blurb": ""
-    },
-    {
-      "id": "rss_c02d4eef93f3",
-      "source": "QRZ Forums",
-      "title": "WILLIAM C \"Bill\" YEARGAIN  KO6KD SK",
-      "url": "https://forums.qrz.com/index.php?threads/william-c-bill-yeargain-ko6kd-sk.993812/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781127501,
-      "blurb": ""
-    },
-    {
-      "id": "rss_fc50f840e29d",
-      "source": "QRZ Forums",
-      "title": "CE0/EI9KA \u2013 Easter Island.",
-      "url": "https://forums.qrz.com/index.php?threads/ce0-ei9ka-%E2%80%93-easter-island.994035/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781124531,
-      "blurb": ""
-    },
-    {
-      "id": "rss_bf019f1915be",
-      "source": "QRZ Forums",
-      "title": "DXLook Introduces VHF Propagation Map",
-      "url": "https://forums.qrz.com/index.php?threads/dxlook-introduces-vhf-propagation-map.965755/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781120859,
-      "blurb": ""
-    },
-    {
-      "id": "rss_f2001cf2abb0",
-      "source": "QRZ Forums",
-      "title": "World Soccer Tournament Special Event 2026 On the Air!",
-      "url": "https://forums.qrz.com/index.php?threads/world-soccer-tournament-special-event-2026-on-the-air.991397/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781119648,
-      "blurb": ""
-    },
-    {
-      "id": "rss_109246e29a75",
-      "source": "QRZ Forums",
-      "title": "12 Days of Christmas 2025 Event",
-      "url": "https://forums.qrz.com/index.php?threads/12-days-of-christmas-2025-event.980459/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781116224,
-      "blurb": ""
-    },
-    {
-      "id": "rss_ddfc8e7f7fcd",
-      "source": "QRZ Forums",
-      "title": "G6FPX SK",
-      "url": "https://forums.qrz.com/index.php?threads/g6fpx-sk.994011/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781106714,
-      "blurb": ""
-    },
-    {
-      "id": "rss_cd9f9ef47cf4",
-      "source": "QRZ Forums",
-      "title": "Getting hands on with the Icom ID-5200",
-      "url": "https://forums.qrz.com/index.php?threads/getting-hands-on-with-the-icom-id-5200.994007/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781103986,
-      "blurb": ""
-    },
-    {
-      "id": "rss_72f3341b38f0",
-      "source": "QRZ Forums",
-      "title": "Open list of current ham radio magazines",
-      "url": "https://forums.qrz.com/index.php?threads/open-list-of-current-ham-radio-magazines.993950/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781099316,
-      "blurb": ""
-    },
-    {
-      "id": "rss_99e4ac3d385b",
-      "source": "QRZ Forums",
-      "title": "HamRadioNow: Ancient AVcomm with Captain Steeeve",
-      "url": "https://forums.qrz.com/index.php?threads/hamradionow-ancient-avcomm-with-captain-steeeve.991691/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1781098815,
+      "created_utc": 1781166204,
       "blurb": ""
     }
   ],
-  "trends": [
-    {
-      "term": "Event",
-      "recent_mentions": 4,
-      "baseline_mentions": 0,
-      "velocity": 4.0,
-      "is_new": true
-    }
-  ],
+  "trends": [],
   "competitive": [
+    {
+      "id": "youtube__wx_ty6IJCQ",
+      "title": "THE VISUAL MORSE CODE DECODER",
+      "channel": "Echoes of Honor",
+      "url": "https://www.youtube.com/watch?v=_wx_ty6IJCQ",
+      "views": 5120093,
+      "comments": 345,
+      "published": "2026-06-07T16:45:04Z"
+    },
     {
       "id": "youtube_ZPUcnbO3d8c",
       "title": "Tx to UT #hobby #hamradio #morsecode #hamradiolife #radiooperator",
       "channel": "Hobby Steve",
       "url": "https://www.youtube.com/watch?v=ZPUcnbO3d8c",
-      "views": 663956,
-      "comments": 130,
+      "views": 695603,
+      "comments": 131,
       "published": "2026-06-05T00:58:38Z"
     },
     {
@@ -188,7 +99,7 @@
       "title": "2019+ 5th gen RAM radio mount #ramtrucks #skymo #cbradio #hamradio #gmrs #5thgenram",
       "channel": "SKYMO Radio Gear Company",
       "url": "https://www.youtube.com/watch?v=CLzHJudnpO8",
-      "views": 521868,
+      "views": 527786,
       "comments": 120,
       "published": "2026-06-01T00:30:32Z"
     },
@@ -197,7 +108,7 @@
       "title": "Smart PTT Sim Card Two-Way Radios",
       "channel": "Smart PTT South Africa",
       "url": "https://www.youtube.com/watch?v=5gQR7sOu8JI",
-      "views": 206107,
+      "views": 206158,
       "comments": 0,
       "published": "2026-06-04T18:22:05Z"
     },
@@ -206,8 +117,8 @@
       "title": "We Found the Hidden Radio World Anyone Can Listen To",
       "channel": "The Modern Rogue",
       "url": "https://www.youtube.com/watch?v=fPf3kj_dAsc",
-      "views": 163486,
-      "comments": 290,
+      "views": 166803,
+      "comments": 293,
       "published": "2026-05-28T18:05:01Z"
     },
     {
@@ -215,8 +126,8 @@
       "title": "Collins Radio Was the Best. So Why Did It Fail?",
       "channel": "The History Archive",
       "url": "https://www.youtube.com/watch?v=PUsHop62yMg",
-      "views": 86744,
-      "comments": 165,
+      "views": 87583,
+      "comments": 168,
       "published": "2026-06-03T15:17:02Z"
     },
     {
@@ -224,8 +135,8 @@
       "title": "FCC Goes After Unlicensed Operator On The Ham Bands!",
       "channel": "Ham Radio Crash Course",
       "url": "https://www.youtube.com/watch?v=UYU_W-UeKYI",
-      "views": 76771,
-      "comments": 542,
+      "views": 77259,
+      "comments": 543,
       "published": "2026-05-29T15:18:35Z"
     },
     {
@@ -233,8 +144,8 @@
       "title": "\u0d32\u0d48\u0d38\u0d7b\u0d38\u0d4d \u0d09\u0d23\u0d4d\u0d1f\u0d19\u0d4d\u0d15\u0d3f\u0d7d \u0d2e\u0d3e\u0d24\u0d4d\u0d30\u0d02 \u0d1a\u0d46\u0d2f\u0d4d\u0d2f\u0d3e\u0d7b \u0d15\u0d34\u0d3f\u0d2f\u0d41\u0d28\u0d4d\u0d28 \u0d39\u0d4b\u0d2c\u0d3f. Ham Radio #hamradio #wireless #diy #communication",
       "channel": "Mr tech Electronics",
       "url": "https://www.youtube.com/watch?v=IIF5vxQKfqQ",
-      "views": 55014,
-      "comments": 119,
+      "views": 57330,
+      "comments": 121,
       "published": "2026-05-31T13:12:43Z"
     },
     {
@@ -242,7 +153,7 @@
       "title": "The Ham Radio: Where Did 750,000 Operators Go?",
       "channel": "Buried History with Jonathan Reed",
       "url": "https://www.youtube.com/watch?v=f8rcxPu5oOU",
-      "views": 46648,
+      "views": 47256,
       "comments": 345,
       "published": "2026-05-28T22:33:26Z"
     },
@@ -251,52 +162,34 @@
       "title": "The Real Reason 5/8-Wave Antennas Work So Well",
       "channel": "Telecom Training",
       "url": "https://www.youtube.com/watch?v=yDMNhk71tNQ",
-      "views": 45767,
-      "comments": 148,
+      "views": 46932,
+      "comments": 150,
       "published": "2026-06-03T16:00:38Z"
     },
     {
-      "id": "youtube_CI2WDNWEEz0",
-      "title": "TRANSFORME SEU CELULAR EM PX",
-      "channel": "INSTRUTOR GON\u00c7ALVES",
-      "url": "https://www.youtube.com/watch?v=CI2WDNWEEz0",
-      "views": 28350,
-      "comments": 141,
-      "published": "2026-06-03T21:00:28Z"
+      "id": "youtube_-RDyTsScSKc",
+      "title": "Best GMRS Setup for a Truck: Radio, Antenna, Mount, and Cable",
+      "channel": "Wholly Outdoor",
+      "url": "https://www.youtube.com/watch?v=-RDyTsScSKc",
+      "views": 25479,
+      "comments": 23,
+      "published": "2026-05-30T12:00:34Z"
     },
     {
       "id": "youtube_xFutq5wyYcI",
       "title": "FCC Citation For Unlicensed Operation, Ted Cruz Thanks Ham Radio Operators & FCC Roundup For May",
       "channel": "NotaRubicon Productions",
       "url": "https://www.youtube.com/watch?v=xFutq5wyYcI",
-      "views": 24952,
+      "views": 25000,
       "comments": 103,
       "published": "2026-05-31T21:00:41Z"
-    },
-    {
-      "id": "youtube_9KlkUhW4xII",
-      "title": "It Is Against The Law To Say These Words On Your Two-Way Radio! (Amateur Radio, GMRS, CB Radio)",
-      "channel": "NotaRubicon Productions",
-      "url": "https://www.youtube.com/watch?v=9KlkUhW4xII",
-      "views": 21807,
-      "comments": 320,
-      "published": "2026-06-04T22:53:32Z"
-    },
-    {
-      "id": "youtube_JmamZk203WY",
-      "title": "What Happened to the Used Ham Radio Market?",
-      "channel": "Real Ham Radio",
-      "url": "https://www.youtube.com/watch?v=JmamZk203WY",
-      "views": 17930,
-      "comments": 277,
-      "published": "2026-06-06T08:42:24Z"
     },
     {
       "id": "youtube_r2Ks6XIGYGE",
       "title": "Pota with a New Antenna! #hamradio #morsecode #parksontheair #antenna #hobby",
       "channel": "Radio Roamers",
       "url": "https://www.youtube.com/watch?v=r2Ks6XIGYGE",
-      "views": 6764,
+      "views": 6770,
       "comments": 7,
       "published": "2026-05-28T21:36:24Z"
     },
@@ -305,9 +198,18 @@
       "title": "Group POTA Activation! #hamradio #hobby #technology #parksontheair",
       "channel": "Radio Roamers",
       "url": "https://www.youtube.com/watch?v=b7M87Qimb_4",
-      "views": 4233,
+      "views": 4236,
       "comments": 4,
       "published": "2026-05-30T17:36:21Z"
+    },
+    {
+      "id": "youtube_apQacUjfqd8",
+      "title": "POTA Tips I Wish I Knew Sooner",
+      "channel": "Conor - KF8CNK",
+      "url": "https://www.youtube.com/watch?v=apQacUjfqd8",
+      "views": 2384,
+      "comments": 61,
+      "published": "2026-06-09T00:45:48Z"
     }
   ]
 }
