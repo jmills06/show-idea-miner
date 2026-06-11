@@ -1,0 +1,39 @@
+name: Generate Episode Pitches
+
+on:
+  schedule:
+    # 12:00 UTC every Monday = 8:00 AM Eastern, after that morning's mining run
+    - cron: "0 12 * * 1"
+  workflow_dispatch: {}   # manual "Run workflow" button for testing
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Generate episode pitches
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_ideas.py
+
+      - name: Commit results
+        run: |
+          git config user.name "idea-miner-bot"
+          git config user.email "actions@github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No new pitches this run, nothing to commit."
+          else
+            git commit -m "Weekly episode pitches: $(date -u +%Y-%m-%d)"
+            git push
+          fi
