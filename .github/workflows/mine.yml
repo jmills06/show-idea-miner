@@ -14,21 +14,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Run the miner
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
         run: python scripts/mine_ideas.py
 
       - name: Commit results
         run: |
           git config user.name "idea-miner-bot"
           git config user.email "actions@github.com"
-          git add ideas.json ideas/ seen.json
+          git add -A
           if git diff --cached --quiet; then
             echo "No new ideas this run, nothing to commit."
           else
