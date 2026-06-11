@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>Show Idea Miner — The Everyday Ham</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-top: #152333;
+    --navy-bottom: #0d1620;
+    --orange: #ff7030;
+    --cream: #fdf8e5;
+    --cream-80: rgba(253, 248, 229, 0.8);
+    --cream-50: rgba(253, 248, 229, 0.5);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(253, 248, 229, 0.12);
+    --font-display: "Oswald", "Arial Narrow", Impact, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--navy-top) 0%, var(--navy-bottom) 100%);
+    color: var(--cream);
+    font-family: var(--font-body);
+    text-align: left;
+  }
+
+  .board {
+    width: 100%;
+    height: 100%;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* ------------------------------ header ------------------------------ */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex: 0 0 auto;
+  }
+  .bulb { width: 72px; height: 72px; flex: 0 0 auto; }
+  .bulb .glass { fill: none; stroke: var(--cream-80); stroke-width: 4; }
+  .bulb .base  { fill: none; stroke: var(--cream-50); stroke-width: 4; stroke-linecap: round; }
+  .bulb .filament {
+    fill: none; stroke: var(--orange); stroke-width: 5; stroke-linecap: round;
+    filter: drop-shadow(0 0 6px rgba(255, 112, 48, 0.9));
+    animation: filament-breathe 4s ease-in-out infinite;
+  }
+  @keyframes filament-breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bulb .filament { animation: none; }
+    .card { transition: none !important; }
+  }
+  .header-text h1 {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    line-height: 1.05;
+  }
+  .header-text h1 span { color: var(--orange); }
+  .header-meta {
+    margin-left: auto;
+    text-align: right;
+    font-size: 24px;
+    color: var(--cream-50);
+    line-height: 1.5;
+  }
+  .header-meta .fresh { color: var(--cream-80); }
+
+  /* ---------------------------- idea card ----------------------------- */
+  .stage {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .card {
+    position: absolute;
+    inset: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 44px 44px 36px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .card.visible { opacity: 1; }
+
+  .source-badge {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange);
+    border: 2px solid var(--orange);
+    border-radius: 999px;
+    padding: 8px 24px;
+    margin-bottom: 34px;
+  }
+
+  .idea-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 62px;
+    line-height: 1.18;
+    margin-bottom: 30px;
+    /* clamp very long titles to keep the layout safe */
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .idea-blurb {
+    font-size: 32px;
+    line-height: 1.5;
+    color: var(--cream-80);
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-bottom {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 30px;
+    padding-top: 30px;
+  }
+  .stats { font-size: 30px; color: var(--cream-80); line-height: 1.7; }
+  .stats .num { color: var(--orange); font-weight: 600; }
+  .stats .label { color: var(--cream-50); }
+  .qr-wrap {
+    margin-left: auto;
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 12px;
+    flex: 0 0 auto;
+  }
+  .qr-wrap .hint {
+    font-size: 16px;
+    color: #152333;
+    text-align: center;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* --------------------------- trends panel --------------------------- */
+  .trends {
+    flex: 0 0 auto;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 32px 38px 36px;
+  }
+  .trends h2 {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cream-80);
+    margin-bottom: 24px;
+  }
+  .trends h2 .arrow { color: var(--orange); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 18px; }
+  .chip {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 14px;
+    background: rgba(255, 112, 48, 0.10);
+    border: 1px solid rgba(255, 112, 48, 0.35);
+    border-radius: 999px;
+    padding: 14px 28px;
+    font-size: 30px;
+  }
+  .chip .term { font-weight: 600; color: var(--cream); }
+  .chip .count { color: var(--cream-50); font-size: 25px; }
+  .chip .new-badge {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--navy-bottom);
+    background: var(--orange);
+    border-radius: 6px;
+    padding: 2px 10px;
+  }
+  .trends .empty { color: var(--cream-50); font-size: 28px; }
+
+  /* ------------------------------ footer ------------------------------ */
+  .footer {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    font-size: 26px;
+    color: var(--cream-50);
+  }
+  .footer .counter { color: var(--cream-80); }
+  .footer .brand {
+    margin-left: auto;
+    font-family: var(--font-display);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .footer .brand span { color: var(--orange); }
+</style>
+</head>
+<body>
+<div class="board">
+
+  <div class="header">
+    <svg class="bulb" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="glass" d="M50 8 C30 8 17 23 17 41 c0 12 6 20 12 27 4 5 6 9 6 14 h30 c0-5 2-9 6-14 6-7 12-15 12-27 C83 23 70 8 50 8 Z"/>
+      <path class="filament" d="M40 70 v-12 l6-7 -6-7 6-7 M60 70 v-12 l-6-7 6-7 -6-7"/>
+      <path class="base" d="M37 88 h26 M39 95 h22"/>
+    </svg>
+    <div class="header-text">
+      <h1>Show Idea <span>Miner</span></h1>
+    </div>
+    <div class="header-meta">
+      <div class="fresh" id="updated-line">Loading…</div>
+      <div id="clock-line"></div>
+    </div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="card visible" id="card-a"></div>
+    <div class="card" id="card-b"></div>
+  </div>
+
+  <div class="trends" id="trends">
+    <h2><span class="arrow">▲</span> Trending in the Community</h2>
+    <div class="chip-row" id="chip-row">
+      <div class="empty">Gathering trend history… check back in a few days.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="counter" id="counter">&nbsp;</div>
+    <div class="brand">The Everyday <span>Ham</span></div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* =====================================================================
+   Working constants — tune here
+   ===================================================================== */
+const ROTATE_SECONDS  = 20;   // how long each idea card stays up
+const REFRESH_MINUTES = 30;   // how often to re-fetch ideas.json
+const MAX_TRENDS      = 6;    // chips shown in the trends panel
+const QR_SIZE         = 150;  // pixels
+
+/* =====================================================================
+   State
+   ===================================================================== */
+let items = [];            // current data (kept on fetch failure)
+let trends = [];
+let generatedAt = null;
+let displayIndex = 0;      // index of the item currently on screen
+let activeCardIsA = true;  // which of the two card layers is visible
+let secondsSinceRotate = 0;
+let secondsSinceFetch = 0;
+
+/* =====================================================================
+   Data fetch — build into temps, swap only if non-empty, clamp index
+   ===================================================================== */
+async function refreshData() {
+  try {
+    const resp = await fetch("ideas.json?t=" + Date.now(), { cache: "no-store" });
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    const data = await resp.json();
+    const newItems = Array.isArray(data.items) ? data.items : [];
+    const newTrends = Array.isArray(data.trends) ? data.trends : [];
+    if (newItems.length === 0 && items.length > 0) {
+      console.warn("Fetched empty batch; keeping last known data.");
+      return;
+    }
+    items = newItems;
+    trends = newTrends;
+    generatedAt = data.generated_at || null;
+    if (displayIndex >= items.length) displayIndex = 0;  // clamp after swap
+    renderTrends();
+    renderUpdatedLine();
+    renderCard(currentCardEl(), items[displayIndex]);
+    renderCounter();
+  } catch (err) {
+    console.warn("Fetch failed; keeping last known data.", err);
+  }
+}
+
+/* =====================================================================
+   Rendering
+   ===================================================================== */
+function currentCardEl() {
+  return document.getElementById(activeCardIsA ? "card-a" : "card-b");
+}
+function hiddenCardEl() {
+  return document.getElementById(activeCardIsA ? "card-b" : "card-a");
+}
+
+function renderCard(cardEl, item) {
+  if (!item) {
+    cardEl.innerHTML =
+      '<div class="idea-title" style="color:var(--cream-50)">No ideas mined yet.' +
+      "<br>The next scheduled run will fill this board.</div>";
+    return;
+  }
+  const stats =
+    '<div class="stats">' +
+      '<span class="num">' + Number(item.score || 0).toLocaleString() + "</span>" +
+      ' <span class="label">points</span> &nbsp;&nbsp; ' +
+      '<span class="num">' + Number(item.comments || 0).toLocaleString() + "</span>" +
+      ' <span class="label">comments</span>' +
+    "</div>";
+
+  cardEl.innerHTML =
+    '<div class="source-badge">' + escapeHtml(item.source || "") + "</div>" +
+    '<div class="idea-title">' + escapeHtml(item.title || "") + "</div>" +
+    (item.blurb ? '<div class="idea-blurb">' + escapeHtml(item.blurb) + "</div>" : "") +
+    '<div class="card-bottom">' + stats +
+      '<div class="qr-wrap"><div class="qr-target"></div><div class="hint">SCAN FOR THREAD</div></div>' +
+    "</div>";
+
+  const qrTarget = cardEl.querySelector(".qr-target");
+  if (item.url && window.QRCode) {
+    new QRCode(qrTarget, {
+      text: item.url, width: QR_SIZE, height: QR_SIZE,
+      colorDark: "#152333", colorLight: "#fdf8e5",
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+  } else {
+    cardEl.querySelector(".qr-wrap").style.display = "none";
+  }
+}
+
+function rotateCard() {
+  if (items.length <= 1) return;
+  displayIndex = (displayIndex + 1) % items.length;
+  const incoming = hiddenCardEl();
+  const outgoing = currentCardEl();
+  renderCard(incoming, items[displayIndex]);
+  incoming.classList.add("visible");
+  outgoing.classList.remove("visible");
+  activeCardIsA = !activeCardIsA;
+  renderCounter();  // from the index being DISPLAYED
+}
+
+function renderCounter() {
+  const el = document.getElementById("counter");
+  el.textContent = items.length
+    ? "Idea " + (displayIndex + 1) + " of " + items.length
+    : "";
+}
+
+function renderTrends() {
+  const row = document.getElementById("chip-row");
+  if (!trends.length) {
+    row.innerHTML = '<div class="empty">Gathering trend history… check back in a few days.</div>';
+    return;
+  }
+  row.innerHTML = trends.slice(0, MAX_TRENDS).map(function (t) {
+    const badge = t.is_new
+      ? '<span class="new-badge">NEW</span>'
+      : '<span class="count">▲' + escapeHtml(String(t.velocity)) + "×</span>";
+    return '<div class="chip"><span class="term">' + escapeHtml(t.term) + "</span>" +
+           '<span class="count">' + t.recent_mentions + " mentions</span>" + badge + "</div>";
+  }).join("");
+}
+
+function renderUpdatedLine() {
+  const el = document.getElementById("updated-line");
+  if (!generatedAt) { el.textContent = "Waiting for first batch"; return; }
+  const d = new Date(generatedAt);
+  el.textContent = "Mined " + d.toLocaleDateString(undefined,
+    { weekday: "short", month: "short", day: "numeric" });
+}
+
+function renderClock() {
+  document.getElementById("clock-line").textContent =
+    new Date().toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+/* =====================================================================
+   Single master interval — one 1s tick drives everything
+   ===================================================================== */
+setInterval(function () {
+  secondsSinceRotate += 1;
+  secondsSinceFetch += 1;
+  if (secondsSinceRotate >= ROTATE_SECONDS) {
+    secondsSinceRotate = 0;
+    rotateCard();
+  }
+  if (secondsSinceFetch >= REFRESH_MINUTES * 60) {
+    secondsSinceFetch = 0;
+    refreshData();
+  }
+  renderClock();
+}, 1000);
+
+/* initial load */
+renderClock();
+refreshData();
+</script>
+</body>
+</html>
