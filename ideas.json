@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-11T01:46:36.650743+00:00",
+  "generated_at": "2026-06-11T02:13:10.051232+00:00",
   "phase": 1,
   "item_count": 19,
   "items": [
@@ -194,41 +194,5 @@
       "blurb": "Live! Tonight! East Coast Reflector Tech Net. Tuesday 20:00 Eastern Daylight Time USA/00:00 UTC This multi-mode net provides a forum for participants to discuss amateur radio topics, ask amateur radio-related questions,\u2026"
     }
   ],
-  "trends": [
-    {
-      "term": "HamRadio",
-      "recent_mentions": 7,
-      "baseline_mentions": 0,
-      "velocity": 7.0,
-      "is_new": true
-    },
-    {
-      "term": "AmateurRadio",
-      "recent_mentions": 5,
-      "baseline_mentions": 0,
-      "velocity": 5.0,
-      "is_new": true
-    },
-    {
-      "term": "POTA",
-      "recent_mentions": 4,
-      "baseline_mentions": 0,
-      "velocity": 4.0,
-      "is_new": true
-    },
-    {
-      "term": "amateurradio hamradio",
-      "recent_mentions": 3,
-      "baseline_mentions": 0,
-      "velocity": 3.0,
-      "is_new": true
-    },
-    {
-      "term": "ParksOnTheAir",
-      "recent_mentions": 3,
-      "baseline_mentions": 0,
-      "velocity": 3.0,
-      "is_new": true
-    }
-  ]
+  "trends": []
 }
