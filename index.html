@@ -126,6 +126,30 @@
     margin-bottom: 34px;
   }
 
+  .source-badge.pitch-badge {
+    color: var(--navy-bottom);
+    background: var(--orange);
+    border-color: var(--orange);
+  }
+  .card.pitch { border-left: 6px solid var(--orange); }
+
+  .pitch-section { margin-bottom: 26px; }
+  .pitch-label {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .pitch-text {
+    font-size: 32px;
+    line-height: 1.5;
+    color: var(--cream-80);
+  }
+  .pitch-sources { font-size: 26px; color: var(--cream-50); line-height: 1.6; }
+
   .idea-title {
     font-family: var(--font-display);
     font-weight: 500;
@@ -285,7 +309,7 @@ const QR_SIZE         = 150;  // pixels
 /* =====================================================================
    State
    ===================================================================== */
-let items = [];            // current data (kept on fetch failure)
+let items = [];            // combined playlist: pitches first, then raw items
 let trends = [];
 let generatedAt = null;
 let displayIndex = 0;      // index of the item currently on screen
@@ -301,8 +325,21 @@ async function refreshData() {
     const resp = await fetch("ideas.json?t=" + Date.now(), { cache: "no-store" });
     if (!resp.ok) throw new Error("HTTP " + resp.status);
     const data = await resp.json();
-    const newItems = Array.isArray(data.items) ? data.items : [];
+    const rawItems = Array.isArray(data.items) ? data.items : [];
     const newTrends = Array.isArray(data.trends) ? data.trends : [];
+
+    // Episode pitches are optional (Phase 2); a missing file is fine.
+    let pitches = [];
+    try {
+      const pResp = await fetch("show_ideas.json?t=" + Date.now(), { cache: "no-store" });
+      if (pResp.ok) {
+        const pData = await pResp.json();
+        pitches = (Array.isArray(pData.ideas) ? pData.ideas : [])
+          .map(function (p) { p.type = "pitch"; return p; });
+      }
+    } catch (e) { /* no pitches yet; not an error */ }
+
+    const newItems = pitches.concat(rawItems);
     if (newItems.length === 0 && items.length > 0) {
       console.warn("Fetched empty batch; keeping last known data.");
       return;
@@ -331,12 +368,37 @@ function hiddenCardEl() {
 }
 
 function renderCard(cardEl, item) {
+  cardEl.classList.remove("pitch");
   if (!item) {
     cardEl.innerHTML =
       '<div class="idea-title" style="color:var(--cream-50)">No ideas mined yet.' +
       "<br>The next scheduled run will fill this board.</div>";
     return;
   }
+
+  if (item.type === "pitch") {
+    cardEl.classList.add("pitch");
+    const sources = (item.sources || []);
+    const sourceText = sources.map(function (s) {
+      return escapeHtml(s.label || "");
+    }).filter(Boolean).join(" • ");
+    const qrUrl = sources.length && sources[0].url ? sources[0].url : "";
+
+    cardEl.innerHTML =
+      '<div class="source-badge pitch-badge">Episode Pitch</div>' +
+      '<div class="idea-title">' + escapeHtml(item.title || "") + "</div>" +
+      '<div class="pitch-section"><div class="pitch-label">Why now</div>' +
+        '<div class="pitch-text">' + escapeHtml(item.why_now || "") + "</div></div>" +
+      '<div class="pitch-section"><div class="pitch-label">The Everyday Ham angle</div>' +
+        '<div class="pitch-text">' + escapeHtml(item.angle || "") + "</div></div>" +
+      '<div class="card-bottom">' +
+        '<div class="pitch-sources">' + sourceText + "</div>" +
+        '<div class="qr-wrap"><div class="qr-target"></div><div class="hint">SCAN FOR THREAD</div></div>' +
+      "</div>";
+    attachQr(cardEl, qrUrl);
+    return;
+  }
+
   const stats =
     '<div class="stats">' +
       '<span class="num">' + Number(item.score || 0).toLocaleString() + "</span>" +
@@ -352,11 +414,14 @@ function renderCard(cardEl, item) {
     '<div class="card-bottom">' + stats +
       '<div class="qr-wrap"><div class="qr-target"></div><div class="hint">SCAN FOR THREAD</div></div>' +
     "</div>";
+  attachQr(cardEl, item.url || "");
+}
 
+function attachQr(cardEl, url) {
   const qrTarget = cardEl.querySelector(".qr-target");
-  if (item.url && window.QRCode) {
+  if (url && window.QRCode) {
     new QRCode(qrTarget, {
-      text: item.url, width: QR_SIZE, height: QR_SIZE,
+      text: url, width: QR_SIZE, height: QR_SIZE,
       colorDark: "#152333", colorLight: "#fdf8e5",
       correctLevel: QRCode.CorrectLevel.M,
     });
@@ -379,9 +444,10 @@ function rotateCard() {
 
 function renderCounter() {
   const el = document.getElementById("counter");
-  el.textContent = items.length
-    ? "Idea " + (displayIndex + 1) + " of " + items.length
-    : "";
+  if (!items.length) { el.textContent = ""; return; }
+  const current = items[displayIndex];
+  const label = current && current.type === "pitch" ? "Pitch" : "Idea";
+  el.textContent = label + " " + (displayIndex + 1) + " of " + items.length;
 }
 
 function renderTrends() {
