@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-06-11T02:24:50.550474+00:00",
+  "model": "claude-sonnet-4-6",
+  "idea_count": 8,
+  "ideas": [
+    {
+      "title": "10,000 POTA QSOs by Bike: What It Takes to Go the Distance",
+      "why_now": "N4JAW just logged their 10,000th POTA contact while activating by bicycle, a remarkable milestone generating community buzz.",
+      "angle": "Celebrate the milestone and dig into what sustained POTA dedication looks like \u2014 gear, logistics, staying motivated, and combining human-powered travel with ham radio for everyday operators.",
+      "sources": [
+        {
+          "label": "Mastodon @N4JAW milestone post, 10 comments",
+          "url": "https://mastodon.radio/@N4JAW/116721435948917369"
+        },
+        {
+          "label": "Mastodon @N4JAW blog post announcement",
+          "url": "https://mastodon.radio/@N4JAW/116722745772835556"
+        }
+      ]
+    },
+    {
+      "title": "POTA and WWFF Finally Making Peace \u2014 What It Means for Activators",
+      "why_now": "A long-standing code-of-conduct hostility between POTA and WWFF appears to have been formally resolved, opening doors for cross-program cooperation.",
+      "angle": "Break down the POTA/WWFF history in plain language and explain practically what the thaw means \u2014 can you log contacts for both programs on the same activation? Should you care?",
+      "sources": [
+        {
+          "label": "Mastodon @dj3ei POTA/WWFF post, 2 comments",
+          "url": "https://mastodon.radio/@dj3ei/116725997679611300"
+        }
+      ]
+    },
+    {
+      "title": "SmartBeaconing Demystified: Dialing In Your APRS Settings",
+      "why_now": "A popular community question this week on optimizing SmartBeaconing settings for the Kenwood TH-D75 sparked practical discussion.",
+      "angle": "Walk through SmartBeaconing parameters in plain English \u2014 speed thresholds, turn sensitivity, time intervals \u2014 so everyday operators can stop guessing and actually tune their tracker for how they move.",
+      "sources": [
+        {
+          "label": "Mastodon @bud_t SmartBeaconing question, 1 comment",
+          "url": "https://m.ai6yr.org/@bud_t/116722990929650776"
+        }
+      ]
+    },
+    {
+      "title": "Tiger Tails, Ground Planes, and Your HT: Easy Antenna Wins",
+      "why_now": "A beginner question about tiger tail counterpoise length and SWR tolerance surfaced real confusion that many new HT users share.",
+      "angle": "Explain the tiger tail counterpoise clearly \u2014 why it helps, how precise you really need to be with the length, and what other low-cost HT antenna improvements everyday operators can make right now.",
+      "sources": [
+        {
+          "label": "Mastodon @KG5ECE tiger tail question, 4 comments",
+          "url": "https://mastodon.radio/@KG5ECE/116723906882583341"
+        }
+      ]
+    },
+    {
+      "title": "Reviving Teletext for Ham Radio: Retro Tech or Actual Useful Mode?",
+      "why_now": "A Hacker News post on using Teletext in the ham radio context pulled 45 comments and 72 points from a tech-savvy audience.",
+      "angle": "Give the curious everyday ham an accessible tour of what Teletext-over-radio actually involves, how it compares to modes like JS8Call or Winlink, and whether it's a fun experiment or something more.",
+      "sources": [
+        {
+          "label": "Hacker News, 72 pts, 45 comments",
+          "url": "https://news.ycombinator.com/item?id=48325668"
+        }
+      ]
+    },
+    {
+      "title": "Sporadic-E Season Is Here \u2014 How to Chase It and Actually Make Contacts",
+      "why_now": "A strong trans-Atlantic sporadic-E opening on 50 MHz and the FM band was reported this week, right in peak Es season.",
+      "angle": "Give operators a practical seasonal playbook \u2014 what bands to watch, how to use propagation tools in real time, and what to do the moment an opening appears so you don't miss it.",
+      "sources": [
+        {
+          "label": "Mastodon @g7izu sporadic-E opening report",
+          "url": "https://universeodon.com/@g7izu/116727137765367215"
+        },
+        {
+          "label": "Mastodon @g7izu CME/space weather watch",
+          "url": "https://universeodon.com/@g7izu/116720556297020336"
+        }
+      ]
+    },
+    {
+      "title": "QSL Cards and ARRL Membership: What Beginners Actually Need to Know",
+      "why_now": "A self-described remedial question about QSL cards and ARRL membership drew genuine community engagement and represents a gap many newcomers share.",
+      "angle": "Cut through the confusion with a friendly, no-shame explainer \u2014 Logbook of the World, eQSL, paper cards, and what ARRL membership does and doesn't get you as an everyday operator.",
+      "sources": [
+        {
+          "label": "Mastodon @brainofdane QSL beginner question, 1 comment",
+          "url": "https://hachyderm.io/@brainofdane/116716522623890503"
+        }
+      ]
+    },
+    {
+      "title": "I Like Radio, Not Radio People \u2014 Making Club Life Work for Introverts",
+      "why_now": "A candid Mastodon post about dreading local club culture despite loving the hobby resonated with a relatable tension many hams feel.",
+      "angle": "Address the 'I love ham radio but clubs feel unwelcoming' experience directly \u2014 share strategies for finding your people, what good clubs look like, and how to get value from club membership on your own terms.",
+      "sources": [
+        {
+          "label": "Mastodon @venya club anxiety post, 1 comment",
+          "url": "https://musicians.today/@venya/116714749851444796"
+        }
+      ]
+    }
+  ]
+}
