@@ -16,6 +16,7 @@ if absent, Reddit is skipped gracefully. Pure standard library, no installs.
 """
 
 import base64
+import hashlib
 import json
 import os
 import re
@@ -23,6 +24,8 @@ import time
 import html as html_lib
 import urllib.request
 import urllib.parse
+import xml.etree.ElementTree as ET
+from email.utils import parsedate_to_datetime
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -54,6 +57,21 @@ MASTODON_INSTANCE = "https://mastodon.social"
 MASTODON_TAGS = ["amateurradio", "hamradio"]
 MASTODON_LIMIT = 40          # per tag (API max)
 MASTODON_MIN_ENGAGEMENT = 3  # boosts + favorites + replies must reach this
+
+# --- YouTube competitive research (needs YOUTUBE_API_KEY secret) ---
+YOUTUBE_QUERIES = ["ham radio", "POTA parks on the air", "amateur radio"]
+YOUTUBE_DAYS_BACK = 14       # recent uploads only
+YOUTUBE_PER_QUERY = 10
+YOUTUBE_MIN_VIEWS = 2000     # ignore videos below this
+EXCLUDE_CHANNELS = ["everyday ham"]  # don't report our own videos back to us
+
+# --- Forum / blog RSS feeds ---
+# The Action log reports per-feed results; prune or extend freely.
+RSS_FEEDS = [
+    ("QRZ Forums", "https://forums.qrz.com/index.php?forums/-/index.rss"),
+    ("Hackaday", "https://hackaday.com/tag/ham-radio/feed/"),
+]
+RSS_DAYS_BACK = 7            # ignore entries older than this
 
 MAX_TOTAL_ITEMS = 60
 SEEN_RETENTION_DAYS = 45
@@ -252,6 +270,119 @@ def collect_mastodon():
     return items
 
 # ----------------------------------------------------------------------
+# YouTube (competitive research; separate from the display rotation)
+# ----------------------------------------------------------------------
+
+def collect_youtube():
+    api_key = os.environ.get("YOUTUBE_API_KEY", "")
+    if not api_key:
+        print("[youtube] YOUTUBE_API_KEY not set; skipping YouTube this run")
+        return []
+    published_after = datetime.fromtimestamp(
+        time.time() - YOUTUBE_DAYS_BACK * 86400, tz=timezone.utc
+    ).strftime("%Y-%m-%dT%H:%M:%SZ")
+    video_ids, meta = [], {}
+    for q in YOUTUBE_QUERIES:
+        params = urllib.parse.urlencode({
+            "part": "snippet", "q": q, "type": "video",
+            "order": "viewCount", "publishedAfter": published_after,
+            "maxResults": YOUTUBE_PER_QUERY, "key": api_key,
+        })
+        data = fetch_json(f"https://www.googleapis.com/youtube/v3/search?{params}")
+        if not data:
+            print(f"[youtube] query: {q} ... request failed")
+            continue
+        hits = data.get("items", [])
+        print(f"[youtube] query: {q} ... {len(hits)} videos")
+        for v in hits:
+            vid = (v.get("id") or {}).get("videoId")
+            sn = v.get("snippet") or {}
+            if not vid or vid in meta:
+                continue
+            channel = (sn.get("channelTitle") or "").strip()
+            if any(x in channel.lower() for x in EXCLUDE_CHANNELS):
+                continue
+            meta[vid] = {
+                "title": html_lib.unescape((sn.get("title") or "").strip()),
+                "channel": channel,
+                "published": sn.get("publishedAt", ""),
+            }
+            video_ids.append(vid)
+        time.sleep(1)
+    if not video_ids:
+        return []
+    # one stats call for all videos (cheap: 1 quota unit)
+    params = urllib.parse.urlencode({
+        "part": "statistics", "id": ",".join(video_ids[:50]), "key": api_key})
+    stats = fetch_json(f"https://www.googleapis.com/youtube/v3/videos?{params}")
+    results = []
+    for v in (stats or {}).get("items", []):
+        vid = v.get("id")
+        st = v.get("statistics") or {}
+        views = int(st.get("viewCount", 0) or 0)
+        if views < YOUTUBE_MIN_VIEWS or vid not in meta:
+            continue
+        results.append({
+            "id": f"youtube_{vid}",
+            "title": meta[vid]["title"],
+            "channel": meta[vid]["channel"],
+            "url": f"https://www.youtube.com/watch?v={vid}",
+            "views": views,
+            "comments": int(st.get("commentCount", 0) or 0),
+            "published": meta[vid]["published"],
+        })
+    results.sort(key=lambda r: r["views"], reverse=True)
+    print(f"[youtube] kept {len(results)} videos over {YOUTUBE_MIN_VIEWS} views")
+    return results
+
+# ----------------------------------------------------------------------
+# Forum / blog RSS feeds
+# ----------------------------------------------------------------------
+
+WP_BOILERPLATE = re.compile(r"The post .{0,200}? appeared first on .{0,100}?\.",
+                            re.IGNORECASE | re.DOTALL)
+
+def collect_rss():
+    items = []
+    cutoff = time.time() - RSS_DAYS_BACK * 86400
+    for name, url in RSS_FEEDS:
+        kept = 0
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
+                root = ET.fromstring(resp.read())
+        except Exception as e:
+            print(f"[rss] {name} ... failed: {e}")
+            continue
+        for entry in root.iter("item"):  # RSS 2.0
+            title = (entry.findtext("title") or "").strip()
+            link = (entry.findtext("link") or "").strip()
+            desc = strip_html(entry.findtext("description") or "")
+            desc = WP_BOILERPLATE.sub("", desc).strip()
+            pub = entry.findtext("pubDate") or ""
+            try:
+                ts = parsedate_to_datetime(pub).timestamp()
+            except Exception:
+                ts = time.time()  # undated entries assumed fresh
+            if ts < cutoff or not title or not link:
+                continue
+            items.append({
+                "id": "rss_" + hashlib.md5(link.encode()).hexdigest()[:12],
+                "source": name,
+                "title": html_lib.unescape(title),
+                "url": link,
+                "score": 0,
+                "comments": 0,
+                "created_utc": int(ts),
+                "blurb": truncate_words(desc, 220),
+            })
+            kept += 1
+        print(f"[rss] {name} ... kept {kept}")
+        time.sleep(1)
+    print(f"[rss] total kept: {len(items)} (pre-dedup)")
+    return items
+
+# ----------------------------------------------------------------------
 # Trend tracking
 # ----------------------------------------------------------------------
 
@@ -396,7 +527,9 @@ def main():
     now = time.time()
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-    raw = collect_reddit() + collect_hackernews() + collect_mastodon()
+    raw = (collect_reddit() + collect_hackernews()
+           + collect_mastodon() + collect_rss())
+    competitive = collect_youtube()
 
     # Dedup within this batch
     by_id = {}
@@ -440,6 +573,7 @@ def main():
         "item_count": len(fresh),
         "items": fresh,
         "trends": trends,
+        "competitive": competitive,
     }
 
     if not fresh and not trends:
