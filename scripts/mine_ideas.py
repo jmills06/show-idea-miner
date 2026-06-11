@@ -81,6 +81,7 @@ question questions help advice tips recommendations recommendation anyone
 best good great looking need wanted want trying thoughts opinions
 building build built setup getting started guide review thread discussion
 practice methods method finally today week time day going
+hamradio amateurradio hamradioclub
 """.split())
 
 # Repo root is one level up from scripts/
