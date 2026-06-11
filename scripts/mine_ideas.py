@@ -307,6 +307,12 @@ def update_term_history(fresh_items, today):
     return history, casing
 
 
+def is_stopworded(term):
+    """True if every meaningful part of the term is a stopword
+    (cleans junk already recorded in term_history.json)."""
+    return any(w in STOPWORDS for w in term.split())
+
+
 def compute_trends(history, casing):
     """Compare the recent window against the baseline window before it."""
     now = datetime.now(timezone.utc)
@@ -325,6 +331,8 @@ def compute_trends(history, casing):
     trends = []
     for term, r in recent.items():
         if r < TREND_MIN_MENTIONS:
+            continue
+        if is_stopworded(term):
             continue
         b = baseline.get(term, 0)
         # normalize baseline to a per-recent-window rate for fair comparison
@@ -418,6 +426,13 @@ def main():
     # Rank items: comments weighted over score
     fresh.sort(key=lambda i: i["comments"] * 2 + i["score"], reverse=True)
     fresh = fresh[:MAX_TOTAL_ITEMS]
+
+    # If nothing new came in, keep showing the previous batch
+    if not fresh:
+        prev = load_json(IDEAS_FILE, {})
+        fresh = prev.get("items", [])
+        if fresh:
+            print("[info] no new items; carrying forward previous batch for display")
 
     output = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
