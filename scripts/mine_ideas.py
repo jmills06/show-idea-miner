@@ -49,17 +49,33 @@ HN_QUERIES = [
     "shortwave",
     "Meshtastic",
     "LoRa radio",
+    "RTL-SDR",
+    "HackRF",
+    "GNU Radio",
+    "WSPR",
+    "Morse code",
+    "Baofeng",
+    "APRS",
+    "FT8",
 ]
 HN_MIN_POINTS = 10
 HN_DAYS_BACK = 14
 
 MASTODON_INSTANCE = "https://mastodon.social"
-MASTODON_TAGS = ["amateurradio", "hamradio"]
+MASTODON_TAGS = [
+    "amateurradio", "hamradio",
+    "sota", "qrp", "morsecode",
+    "fieldday", "hamfest", "amsat",
+]
 MASTODON_LIMIT = 40          # per tag (API max)
 MASTODON_MIN_ENGAGEMENT = 3  # boosts + favorites + replies must reach this
 
 # --- YouTube competitive research (needs YOUTUBE_API_KEY secret) ---
-YOUTUBE_QUERIES = ["ham radio", "POTA parks on the air", "amateur radio"]
+YOUTUBE_QUERIES = [
+    "ham radio", "amateur radio", "POTA parks on the air",
+    "Icom", "Yaesu", "Xiegu", "Elecraft", "FlexRadio",
+    "Meshtastic", "Hamvention", "Friedrichshafen ham radio",
+]
 YOUTUBE_DAYS_BACK = 14       # recent uploads only
 YOUTUBE_PER_QUERY = 10
 YOUTUBE_MIN_VIEWS = 2000     # ignore videos below this
@@ -100,6 +116,14 @@ best good great looking need wanted want trying thoughts opinions
 building build built setup getting started guide review thread discussion
 practice methods method finally today week time day going
 hamradio amateurradio hamradioclub
+sota qrp morsecode fieldday hamfest amsat
+one two three like there here com http https www html org net
+band bands radio radios get going make made way back good best
+new old big small first last next still even much many lot
+day days week weeks year years today tonight now then
+post posts thread threads comment comments reply replies
+like just dont don cant can will would could should into over
+amp watt watts via per etc inc com
 """.split())
 
 # Repo root is one level up from scripts/
@@ -311,12 +335,16 @@ def collect_youtube():
         time.sleep(1)
     if not video_ids:
         return []
-    # one stats call for all videos (cheap: 1 quota unit)
-    params = urllib.parse.urlencode({
-        "part": "statistics", "id": ",".join(video_ids[:50]), "key": api_key})
-    stats = fetch_json(f"https://www.googleapis.com/youtube/v3/videos?{params}")
+    # stats calls in chunks of 50 ids (cheap: 1 quota unit per chunk)
+    stat_items = []
+    for i in range(0, len(video_ids), 50):
+        chunk = video_ids[i:i + 50]
+        params = urllib.parse.urlencode({
+            "part": "statistics", "id": ",".join(chunk), "key": api_key})
+        stats = fetch_json(f"https://www.googleapis.com/youtube/v3/videos?{params}")
+        stat_items.extend((stats or {}).get("items", []))
     results = []
-    for v in (stats or {}).get("items", []):
+    for v in stat_items:
         vid = v.get("id")
         st = v.get("statistics") or {}
         views = int(st.get("viewCount", 0) or 0)
@@ -387,16 +415,44 @@ def collect_rss():
 # ----------------------------------------------------------------------
 
 TOKEN_RE = re.compile(r"[a-z0-9][a-z0-9\-]{1,30}")
+URL_RE = re.compile(r"https?://\S+|www\.\S+|\S+\.(?:com|net|org|io)\b",
+                    re.IGNORECASE)
+
+def is_distinctive(word, original_title):
+    """A single word earns trend eligibility only if it carries specific
+    signal: a model/frequency number, an initialism (FT8, APRS, AMSAT),
+    or a hyphenated product code (RTL-SDR, IC-7300)."""
+    if any(ch.isdigit() for ch in word):
+        return True          # 7300, 20m, x-026, ic-7410
+    if "-" in word:
+        return True          # rtl-sdr, ft-710
+    # all-caps initialism in the source title (APRS, AMSAT, POTA, EFHW)
+    if re.search(r"\b" + re.escape(word.upper()) + r"\b", original_title):
+        if word.upper() in original_title and len(word) <= 6:
+            return True
+    return False
 
 def extract_terms(title):
-    """Pull meaningful unigrams and bigrams from a title. Returns a set,
-    so each post counts a term at most once (no single-post inflation)."""
-    words = [w for w in TOKEN_RE.findall(title.lower())
-             if w not in STOPWORDS and not w.isdigit() and len(w) > 2]
-    terms = set(words)
-    raw = TOKEN_RE.findall(title.lower())
+    """Pull meaningful terms from a title. Multi-word phrases are the
+    primary signal; bare single words qualify only if distinctive.
+    Returns a set so each post counts a term at most once."""
+    clean = URL_RE.sub(" ", title)
+    clean = clean.replace("#", " ").replace("@", " ")
+    raw = TOKEN_RE.findall(clean.lower())
+    terms = set()
+
+    # single words: must be distinctive AND not a stopword
+    for w in raw:
+        if w in STOPWORDS or w.isdigit() or len(w) <= 2:
+            continue
+        if is_distinctive(w, title):
+            terms.add(w)
+
+    # bigrams: the workhorse signal; neither half may be a stopword
     for a, b in zip(raw, raw[1:]):
         if a in STOPWORDS or b in STOPWORDS:
+            continue
+        if a.isdigit() and b.isdigit():
             continue
         if len(a) > 2 or len(b) > 2:
             terms.add(f"{a} {b}")
