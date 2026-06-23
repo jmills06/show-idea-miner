@@ -15,6 +15,7 @@ GitHub Action). Pure standard library, no installs.
 
 import json
 import os
+import re
 import time
 import urllib.request
 from datetime import datetime, timezone
@@ -60,6 +61,10 @@ Identify the {ideas_requested} strongest potential episode topics. Favor:
 
 Avoid repeating ideas from previous batches unless there is a genuinely new
 angle, in which case say what's new.
+
+Style rules: never use em dashes (the long dash) anywhere in your output.
+Use a period, comma, colon, or parentheses instead. Keep titles punchy and
+plainspoken, not clickbaity.
 
 Respond with ONLY valid JSON, no markdown fences, no preamble, matching:
 {{
@@ -203,6 +208,13 @@ def call_claude(system_prompt, user_prompt):
     return None
 
 
+def scrub_dashes(text):
+    """Belt-and-suspenders: remove em/en dashes even if the model emits one.
+    ' word — word ' becomes ' word, word '; tight 'a—b' becomes 'a, b'."""
+    text = re.sub(r"\s*[\u2014\u2013]\s*", ", ", text)
+    return text
+
+
 def parse_ideas(text):
     """Parse Claude's response defensively; strip fences if present."""
     if not text:
@@ -228,9 +240,9 @@ def parse_ideas(text):
         if not raw.get("title"):
             continue
         ideas.append({
-            "title": str(raw.get("title", "")).strip(),
-            "why_now": str(raw.get("why_now", "")).strip(),
-            "angle": str(raw.get("angle", "")).strip(),
+            "title": scrub_dashes(str(raw.get("title", "")).strip()),
+            "why_now": scrub_dashes(str(raw.get("why_now", "")).strip()),
+            "angle": scrub_dashes(str(raw.get("angle", "")).strip()),
             "sources": [
                 {"label": str(s.get("label", "")).strip(),
                  "url": str(s.get("url", "")).strip()}
