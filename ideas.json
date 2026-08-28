@@ -1,230 +1,231 @@
 {
-  "generated_at": "2026-08-28T20:50:07.428499+00:00",
+  "generated_at": "2026-08-28T21:21:49.670503+00:00",
   "phase": 1,
-  "item_count": 22,
+  "item_count": 21,
   "items": [
     {
-      "id": "mastodon_117169253645850939",
-      "source": "Mastodon #hamradio",
-      "title": "Another fun 2m #morsecode QSO today! 104mi to WJ7V and K7ATN on W7O/CN-057. Nice knife edge diffraction over mt hood.\u2026",
-      "url": "https://m.ai6yr.org/@tsherrygeo/117169253439476176",
-      "score": 16,
-      "comments": 2,
-      "created_utc": 1787860922,
-      "blurb": "Another fun 2m #morsecode QSO today! 104mi to WJ7V and K7ATN on W7O/CN-057. Nice knife edge diffraction over mt hood. #HamRadio #WeakSignal"
+      "id": "groupsio_0593c15ba7_1",
+      "source": "groups.io \u00b7 BITX20",
+      "title": "Questions about RTC and bit-bang i2c",
+      "url": "https://groups.io/g/BITX20/message/125627",
+      "score": 6,
+      "comments": 5,
+      "created_utc": 1787686530,
+      "blurb": "I am recently the proud owner of a zBitx v2, which I intend to use mostly if not exclusively for POTA operations. Since I am interested in FT8, it is important that the device be able to maintain its real-time clock\u2026"
     },
     {
-      "id": "mastodon_117173286609660490",
-      "source": "Mastodon #hamradio",
-      "title": "Hier das Video dazu: Deutsch https://youtu.be/XfDdrqUJrwI?si=bPQ6vl-Nl1DDlqM_ Englisch\u2026",
-      "url": "https://radiosocial.de/@df4or/117173286451201146",
-      "score": 11,
-      "comments": 2,
-      "created_utc": 1787922461,
-      "blurb": "Hier das Video dazu: Deutsch https://youtu.be/XfDdrqUJrwI?si=bPQ6vl-Nl1DDlqM_ Englisch https://youtu.be/SxuDq8iUKWE?si=iOqwTv9zQ9gYk2hO #amateurfunk #hamradio #icom #id5200"
+      "id": "discourse_f8ee59_10679",
+      "source": "Discourse \u00b7 Digirig",
+      "title": "Cannot get MMSSTV to work with y IC-2730A",
+      "url": "https://forum.digirig.net/t/cannot-get-mmsstv-to-work-with-y-ic-2730a/10679",
+      "score": 2,
+      "comments": 6,
+      "views": 33,
+      "created_utc": 1787334101,
+      "blurb": ""
     },
     {
-      "id": "mastodon_117170214967260618",
-      "source": "Mastodon #hamradio",
-      "title": "Calling All Ham Radio Operators! Is this group dead? https://lemmy.world/post/51205715",
-      "url": "https://lemmy.world/post/51205715",
+      "id": "groupsio_b543fe01e0_1",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "QMX+ Front Cover?",
+      "url": "https://groups.io/g/QRPLabs/message/177924",
       "score": 5,
       "comments": 4,
-      "created_utc": 1787875594,
-      "blurb": "Calling All Ham Radio Operators! Is this group dead? https://lemmy.world/post/51205715"
+      "created_utc": 1787928641,
+      "blurb": "Nice stack Don! I've done the same thing with one of my QMXs. Very handy. I'm a little curious re, the strong magnets so close to the mic element. Any issues you've noticed there? Your knobs will clear with my latest\u2026"
     },
     {
-      "id": "mastodon_117168625757546288",
-      "source": "Mastodon #hamradio",
-      "title": "Last test - does it receive as well? I don\u2019t have a 10GHz generator, but I figured that third harmonic of my cheap\u2026",
-      "url": "https://techhub.social/@oz1lqo/117168624583811207",
-      "score": 7,
-      "comments": 2,
-      "created_utc": 1787851327,
-      "blurb": "Last test - does it receive as well? I don\u2019t have a 10GHz generator, but I figured that third harmonic of my cheap ADF4351 would be powerful enough for me to pick it up. Set the generator to 3456MHz (beautiful \ud83e\udd29) and\u2026"
-    },
-    {
-      "id": "mastodon_117174121667138235",
-      "source": "Mastodon #hamradio",
-      "title": "Super stoked about this! @cascadiaradio has a club callsign! We are NA7CR! #HamRadio\u2026",
-      "url": "https://m.ai6yr.org/@tsherrygeo/117174121430078703",
-      "score": 6,
-      "comments": 1,
-      "created_utc": 1787935202,
-      "blurb": "Super stoked about this! @cascadiaradio has a club callsign! We are NA7CR! #HamRadio https://mastodon.radio/@cascadiaradio/117174028663891757"
-    },
-    {
-      "id": "mastodon_117170257846728446",
-      "source": "Mastodon #hamradio",
-      "title": "Is there a line-of-sight tool with a building elevation model included? #hamRadio",
-      "url": "https://mastodon.radio/@W1CDN/117170257643263272",
-      "score": 4,
-      "comments": 2,
-      "created_utc": 1787876245,
-      "blurb": "Is there a line-of-sight tool with a building elevation model included? #hamRadio"
-    },
-    {
-      "id": "mastodon_117174084035716299",
-      "source": "Mastodon #amateurradio",
-      "title": "Had a late night blast operating portable conversing on #JS8Call while doing a time lapse of the Lunar Eclipse.\u2026",
-      "url": "https://mastodon.radio/@N4JAW/117174083507679346",
-      "score": 3,
-      "comments": 2,
-      "created_utc": 1787934623,
-      "blurb": "Had a late night blast operating portable conversing on #JS8Call while doing a time lapse of the Lunar Eclipse. #AmateurRadio #HamRadio"
-    },
-    {
-      "id": "mastodon_117173276963746612",
-      "source": "Mastodon #amateurradio",
-      "title": "In preparation for a listicle in my club newsletter, I have given the Codeberg list of current amateur radio magazines\u2026",
-      "url": "https://mastodon.radio/@K3LOE/117173276779998058",
+      "id": "groupsio_e51c8a675a_1",
+      "source": "groups.io \u00b7 BITX20",
+      "title": "Ubitx problem",
+      "url": "https://groups.io/g/BITX20/message/125615",
       "score": 5,
-      "comments": 1,
-      "created_utc": 1787922314,
-      "blurb": "In preparation for a listicle in my club newsletter, I have given the Codeberg list of current amateur radio magazines a short URL and made sure every entry has consistent metadata. https://tinyurl.com/hamradiomagazines\u2026"
+      "comments": 4,
+      "created_utc": 1787553219,
+      "blurb": "I don't know about your 40meter antenna, but I had a problem once that the efhw was not Correct. The toroid in the balun got hot, resulting in loss of power.. Ft8 could create this in high duty cycles. You could check\u2026"
     },
     {
-      "id": "mastodon_117170489638767735",
-      "source": "Mastodon #amateurradio",
-      "title": "Had a bit of a magloop disaster today. I was working on adding a belt tensioner because the timing belt was still a\u2026",
-      "url": "https://f.kawa-kun.com/display/881761af-116a-90e1-5044-83a719355576",
+      "id": "groupsio_a5f7f44d7b_1",
+      "source": "groups.io \u00b7 BITX20",
+      "title": "I have a question about ordering from HF Signals",
+      "url": "https://groups.io/g/BITX20/message/125611",
+      "score": 5,
+      "comments": 4,
+      "created_utc": 1787517227,
+      "blurb": "Hello Nova, Welcome to the Group. Most first posts are questions. The most common reason for joining the Group is to get help with a problem that they are having with an HFSignals product. The Group is the primary\u2026"
+    },
+    {
+      "id": "groupsio_267b3c960b_0",
+      "source": "groups.io \u00b7 Elecraft",
+      "title": "Buzz on KX2 in yard",
+      "url": "https://groups.io/g/elecraft/message/3885",
+      "score": 4,
+      "comments": 3,
+      "created_utc": 1787908077,
+      "blurb": "Guys, Something different (new?) occurred the other day. I was in my back yard testing out a newly built POTA Performer antenna with my KX2 and 35\u2019 of small coax (can\u2019t remember the type but purchased from Ham Radio\u2026"
+    },
+    {
+      "id": "groupsio_bd9272eacc_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "New QMX+ build RX issue",
+      "url": "https://groups.io/g/QRPLabs/message/177930",
+      "score": 4,
+      "comments": 3,
+      "created_utc": 1787932428,
+      "blurb": "Welp, Stan was right! Somehow I thought JP501 was the BNC connector - DH. So when I realized this morning I was wrong and of course discovered I had not installed the jumper across the JP501 pads. Once done, of course,\u2026"
+    },
+    {
+      "id": "discourse_f8ee59_10676",
+      "source": "Discourse \u00b7 Digirig",
+      "title": "Alinco DR-138 from DX-70",
+      "url": "https://forum.digirig.net/t/alinco-dr-138-from-dx-70/10676",
+      "score": 5,
+      "comments": 2,
+      "views": 38,
+      "created_utc": 1787090577,
+      "blurb": ""
+    },
+    {
+      "id": "groupsio_9824ce29c1_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "QMX/QMX+ Panadapter for M5Stack Tab5",
+      "url": "https://groups.io/g/QRPLabs/message/177931",
       "score": 3,
       "comments": 2,
-      "created_utc": 1787879760,
-      "blurb": "Had a bit of a magloop disaster today. I was working on adding a belt tensioner because the timing belt was still a little slack for my liking only to damage the bearings in the attached rotary encoder to the point of\u2026"
+      "created_utc": 1787933089,
+      "blurb": "On Fri, Aug 28, 2026 at 07:46 AM, John Dusek wrote: did the keyboard keys (typing text) work with you Rii keyboard BT connected to the Tab5? No, only the tap/click/scroll mouse functions, as I reported earlier.\u2026"
     },
     {
-      "id": "mastodon_117173110307233501",
-      "source": "Mastodon #hamradio",
-      "title": "Restpl\u00e4tze f\u00fcr das Funktionstr\u00e4gerseminar im September sichern. Vom 28. bis 30. September 2026 findet in der\u2026",
-      "url": "https://social.darc.de/@darc/117173109980706845",
-      "score": 4,
+      "id": "groupsio_6778038a2d_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "QMX+: I2S output from PCM1804 (IC 407)?",
+      "url": "https://groups.io/g/QRPLabs/message/177933",
+      "score": 2,
       "comments": 1,
-      "created_utc": 1787919768,
-      "blurb": "Restpl\u00e4tze f\u00fcr das Funktionstr\u00e4gerseminar im September sichern. Vom 28. bis 30. September 2026 findet in der DARC-Gesch\u00e4ftsstelle in Baunatal das n\u00e4chste Funktionstr\u00e4gerseminar statt. F\u00fcr Kurzentschlossene sind aktuell\u2026"
+      "created_utc": 1787934882,
+      "blurb": "Ahhh, now what you are talking about makes some sense to me. You want fully synchronous access to the samples for an FPGA DSP filtering solution. I did such FPGA designs in my former career many years ago. So that\u2026"
     },
     {
-      "id": "mastodon_117174797633023269",
-      "source": "Mastodon #hamradio",
-      "title": "#HamRadio #Icom The new Icom X-026 will be unveiled tomorrow in Japan. What do you think it will be?",
-      "url": "https://mstdn.social/@HopelessDemigod/117174797593317385",
-      "score": 3,
+      "id": "groupsio_30a37302a8_0",
+      "source": "groups.io \u00b7 BITX20",
+      "title": "HDMI Adapter",
+      "url": "https://groups.io/g/BITX20/message/125620",
+      "score": 2,
       "comments": 1,
-      "created_utc": 1787945519,
-      "blurb": "#HamRadio #Icom The new Icom X-026 will be unveiled tomorrow in Japan. What do you think it will be?"
+      "created_utc": 1787616432,
+      "blurb": "Why not just buy a micro-HDMI to HDMI cable? Microcenter: https://www.microcenter.com/product/608177/raspberry-pi-micro-hdmi-to-standard-hdmi-(a-m),-1m-cable Amazon: https://a.co/d/0dpmjBMLKen, N2VIP"
     },
     {
-      "id": "mastodon_117170190797979560",
-      "source": "Mastodon #hamradio",
-      "title": "\ud83d\udea8 It is time to check in to the #FediFridayWinlinkNet! Send your #Winlink message between 0000-2359 UTC Friday Aug 28\u2026",
-      "url": "https://m.ai6yr.org/@bud_t/117170190642241324",
-      "score": 4,
+      "id": "groupsio_2ca1ff903e_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "SDR++ iak now on Google Play",
+      "url": "https://groups.io/g/QRPLabs/message/177941",
+      "score": 1,
       "comments": 0,
-      "created_utc": 1787875223,
-      "blurb": "\ud83d\udea8 It is time to check in to the #FediFridayWinlinkNet! Send your #Winlink message between 0000-2359 UTC Friday Aug 28 Try to use a different band or mode to check in each week. To: FFWN Subject: check-in Message body\u2026"
+      "created_utc": 1787946123,
+      "blurb": "On Mon, Aug 24, 2026 at 04:54 AM, Vojtech Bubnik wrote: Thanks to everybody who took part of the SDR++ iak fork testing on google play. Vojtech. Even though I was one of the first participants in testing the beta\u2026"
     },
     {
-      "id": "mastodon_117171622046281552",
-      "source": "Mastodon #amateurradio",
-      "title": "100 Jahre Einsatz im Schwarzwald: Sonderrufzeichen DL100BWACH auf den B\u00e4ndern. Die Bergwacht Achertal feiert ihr\u2026",
-      "url": "https://social.darc.de/@darc/117171621746262112",
-      "score": 3,
+      "id": "groupsio_e0124b0f5f_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "RX Level Calibration for web based ARDOP WINLINK- QMX",
+      "url": "https://groups.io/g/QRPLabs/message/177935",
+      "score": 1,
       "comments": 0,
-      "created_utc": 1787897060,
-      "blurb": "100 Jahre Einsatz im Schwarzwald: Sonderrufzeichen DL100BWACH auf den B\u00e4ndern. Die Bergwacht Achertal feiert ihr 100-j\u00e4hriges Bestehen. Aus diesem Anlass bringen Funkamateure der Region das Sonderrufzeichen DL100BWACH\u2026"
+      "created_utc": 1787937010,
+      "blurb": "Thank you, Manuel, for that description. It also tells me why some other browser-based control programs are failing for me on Android. The \".apk\" apps all work fine with multiple serial ports, but they aren't using the\u2026"
     },
     {
-      "id": "rss_93a97fd1369f",
-      "source": "QRZ Forums",
-      "title": "C5H - The Gambia.",
-      "url": "https://forums.qrz.com/index.php?threads/c5h-the-gambia.1002030/",
-      "score": 0,
+      "id": "groupsio_f45db4bfa2_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "Changing frequency",
+      "url": "https://groups.io/g/QRPLabs/message/177932",
+      "score": 1,
       "comments": 0,
-      "created_utc": 1787949657,
-      "blurb": ""
+      "created_utc": 1787934297,
+      "blurb": "Glad you got it going Jim. Ron"
     },
     {
-      "id": "rss_12e5d2a98f7e",
-      "source": "QRZ Forums",
-      "title": "SP9EHS ROMAN OPRZEDEK  SILENT KEY",
-      "url": "https://forums.qrz.com/index.php?threads/sp9ehs-roman-oprzedek-silent-key.1002014/",
-      "score": 0,
+      "id": "groupsio_aade50d6c6_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "File /How to use the Ulanzi DIAL Controller with N1MM+ and QMX transceiver REVISION 082726.pdf uploaded",
+      "url": "https://groups.io/g/QRPLabs/message/177927",
+      "score": 1,
       "comments": 0,
-      "created_utc": 1787939929,
-      "blurb": ""
+      "created_utc": 1787930240,
+      "blurb": "The following items have been added to the Files area of the QRPLabs@groups.io group. /How to use the Ulanzi DIAL Controller with N1MM+ and QMX transceiver REVISION 082726.pdf By: William Schrader <wtschrader@...>\u2026"
     },
     {
-      "id": "rss_dda83b930526",
-      "source": "QRZ Forums",
-      "title": "This Week's Amateur Radio News and Notes Now Available",
-      "url": "https://forums.qrz.com/index.php?threads/this-weeks-amateur-radio-news-and-notes-now-available.1001998/",
-      "score": 0,
+      "id": "groupsio_f32ea1dcc8_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "QMX+ and Micro PA50(3) - problem with intermittent SWR increase - solved by adding an additional CAT/PTT interface",
+      "url": "https://groups.io/g/QRPLabs/message/177926",
+      "score": 1,
       "comments": 0,
-      "created_utc": 1787928870,
-      "blurb": ""
+      "created_utc": 1787930213,
+      "blurb": "I prepared a version ready for in-field operation. Please see https://gitlab.com/WZab/usb-in-micropython-public/-/wikis/WSJTX-QMXplus-MicroPA50-v3-interface . Of course, that's still an experimental solution. You may\u2026"
     },
     {
-      "id": "rss_e3937e28e699",
-      "source": "QRZ Forums",
-      "title": "D44PX, Cabo Verde Is.",
-      "url": "https://forums.qrz.com/index.php?threads/d44px-cabo-verde-is.1001992/",
-      "score": 0,
+      "id": "groupsio_52254a36dc_0",
+      "source": "groups.io \u00b7 QRPLabs",
+      "title": "QDX - New rock-piercing radio tech",
+      "url": "https://groups.io/g/QRPLabs/message/177923",
+      "score": 1,
       "comments": 0,
-      "created_utc": 1787926180,
-      "blurb": ""
+      "created_utc": 1787927868,
+      "blurb": "Hello Chris Very low bands fascinate me (LowFER, 2200m) but I have a total of zero radios with those capabilities. Now you've got me interested in a QDX-M. I see the QDX-M info and order pages mention 2200m but there\u2026"
     },
     {
-      "id": "rss_436aceabd132",
-      "source": "QRZ Forums",
-      "title": "My latest video",
-      "url": "https://forums.qrz.com/index.php?threads/my-latest-video.1001991/",
-      "score": 0,
+      "id": "groupsio_0a287a8eb7_0",
+      "source": "groups.io \u00b7 BITX20",
+      "title": "#zbitx Looking for zBitx Beta Testers",
+      "url": "https://groups.io/g/BITX20/message/125632",
+      "score": 1,
       "comments": 0,
-      "created_utc": 1787923591,
-      "blurb": ""
+      "created_utc": 1787853660,
+      "blurb": "Greetings Everyone! We are looking for folks who can test our fork of the zbitx software and provide valuable feedback to the volunteer development team at Radio & Electronics Hub. Requirements To participate\u2026"
     },
     {
-      "id": "rss_f74cf3208cee",
-      "source": "QRZ Forums",
-      "title": "I4DZ  Giancarlo  SK",
-      "url": "https://forums.qrz.com/index.php?threads/i4dz-giancarlo-sk.1001990/",
-      "score": 0,
+      "id": "groupsio_5f0c8f2132_0",
+      "source": "groups.io \u00b7 BITX20",
+      "title": "LARCSet CW Mods",
+      "url": "https://groups.io/g/BITX20/message/125628",
+      "score": 1,
       "comments": 0,
-      "created_utc": 1787922237,
-      "blurb": ""
+      "created_utc": 1787738032,
+      "blurb": "Hi everyone!!! Can anyone answer????? I'm working on this LARCSet mod CW to NOT USE the AF oscillator as a modulator. For \"removing R28\" you shall mean \"removing R90\" !!!!!! give me some pointers: 1) To ground the\u2026"
     },
     {
-      "id": "rss_857653596be0",
-      "source": "QRZ Forums",
-      "title": "Jack E (Ed) Lewis, W4MDS SK August 25, 2026",
-      "url": "https://forums.qrz.com/index.php?threads/jack-e-ed-lewis-w4mds-sk-august-25-2026.1001884/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1787912852,
-      "blurb": ""
+      "id": "se_ham_23954",
+      "source": "Stack Exchange (ham)",
+      "title": "Is 20m the most popular location for FT8?",
+      "url": "https://ham.stackexchange.com/questions/23954/is-20m-the-most-popular-location-for-ft8",
+      "score": -2,
+      "comments": 1,
+      "views": 50,
+      "created_utc": 1786828486,
+      "blurb": "General exam question G2E15 claims \"14.074 MHz to 14.077 MHz\" is \"is a common location for FT8\", but is it the most popular location for FT8, or are other bands more popular?"
     },
     {
-      "id": "rss_e9474c00abfa",
-      "source": "QRZ Forums",
-      "title": "J3 Grenada DXpedition",
-      "url": "https://forums.qrz.com/index.php?threads/j3-grenada-dxpedition.1001983/",
-      "score": 0,
+      "id": "se_ham_23955",
+      "source": "Stack Exchange (ham)",
+      "title": "Least expensive HF transceivers Hamlib supports?",
+      "url": "https://ham.stackexchange.com/questions/23955/least-expensive-hf-transceivers-hamlib-supports",
+      "score": -3,
       "comments": 0,
-      "created_utc": 1787901983,
-      "blurb": ""
-    },
-    {
-      "id": "rss_e6dcb2b844e9",
-      "source": "QRZ Forums",
-      "title": "Two Rivers Amateur Radio Club technician class starting 9/19/2026",
-      "url": "https://forums.qrz.com/index.php?threads/two-rivers-amateur-radio-club-technician-class-starting-9-19-2026.1001967/",
-      "score": 0,
-      "comments": 0,
-      "created_utc": 1787871070,
-      "blurb": ""
+      "views": 51,
+      "created_utc": 1786855324,
+      "blurb": "Hamlib supports many radios, but what are the least expensive HF transceivers that it supports? I'm looking for ones with: RJ45 (Ethernet) or USB port for rig control 10 watt min RF output SMA female or Type N antenna\u2026"
     }
   ],
   "trends": [
+    {
+      "term": "QMX",
+      "recent_mentions": 8,
+      "baseline_mentions": 1,
+      "velocity": 6.0,
+      "is_new": false
+    },
     {
       "term": "hk0 py8ww",
       "recent_mentions": 3,
@@ -240,17 +241,17 @@
       "is_new": true
     },
     {
-      "term": "W7O",
+      "term": "20m",
       "recent_mentions": 3,
-      "baseline_mentions": 0,
-      "velocity": 3.0,
-      "is_new": true
+      "baseline_mentions": 5,
+      "velocity": 1.12,
+      "is_new": false
     },
     {
-      "term": "SK August",
+      "term": "FT8",
       "recent_mentions": 3,
-      "baseline_mentions": 7,
-      "velocity": 0.9,
+      "baseline_mentions": 5,
+      "velocity": 1.12,
       "is_new": false
     },
     {
@@ -267,8 +268,8 @@
       "title": "subscriber's kid fan\ud83d\udc76 repair #shorts #subscribe #reels",
       "channel": "ELECRAFT",
       "url": "https://www.youtube.com/watch?v=LCUuRdON_D4",
-      "views": 9365764,
-      "comments": 1422,
+      "views": 9375039,
+      "comments": 1423,
       "published": "2026-08-23T14:30:02Z"
     },
     {
@@ -276,26 +277,17 @@
       "title": "I got a solution boys #hamradio #radiooperator #hamradiolife #hobby #antenna",
       "channel": "Hobby Steve",
       "url": "https://www.youtube.com/watch?v=n55P-F7UmVA",
-      "views": 117880,
+      "views": 117935,
       "comments": 29,
       "published": "2026-08-24T00:07:15Z"
-    },
-    {
-      "id": "youtube_OqPmKlRz9L8",
-      "title": "Millwall fan calls up to bring West Ham fans back down to Earth! \ud83d\ude05#football #millwall #westham",
-      "channel": "talkSPORT",
-      "url": "https://www.youtube.com/watch?v=OqPmKlRz9L8",
-      "views": 105157,
-      "comments": 203,
-      "published": "2026-08-15T19:49:20Z"
     },
     {
       "id": "youtube_1pLy3rkObN0",
       "title": "50 Year Old CB Radio. What\u2019s Hiding Inside?",
       "channel": "Vintage Reveals",
       "url": "https://www.youtube.com/watch?v=1pLy3rkObN0",
-      "views": 72272,
-      "comments": 30,
+      "views": 72622,
+      "comments": 32,
       "published": "2026-08-22T10:00:23Z"
     },
     {
@@ -303,7 +295,7 @@
       "title": "Beat to a 2M HT #hamradio #morsecode",
       "channel": "Ham Radio 2.0",
       "url": "https://www.youtube.com/watch?v=kjmuOVUEQFs",
-      "views": 62486,
+      "views": 62643,
       "comments": 37,
       "published": "2026-08-23T11:36:15Z"
     },
@@ -312,7 +304,7 @@
       "title": "\u201cThis isn\u2019t just a radio\u2026 it\u2019s a pocket-sized tech powerhouse! \ud83d\udd25\ud83d\udcfb\u2600\ufe0f\u201d #KMJB #PortableRadio",
       "channel": "KMJB",
       "url": "https://www.youtube.com/watch?v=O8_Opw-uOkg",
-      "views": 60691,
+      "views": 60728,
       "comments": 11,
       "published": "2026-08-20T09:30:02Z"
     },
@@ -321,7 +313,7 @@
       "title": "\u90fd\u304c\u5730\u4e0b\u30b7\u30a7\u30eb\u30bf\u30fc\u6574\u5099\u3078 \u6771\u4eac\u99c5\u8fd1\u304f\u306e\u516b\u91cd\u6d32\u99d0\u8eca\u5834\u3010WBS\u3011",
       "channel": "\u30c6\u30ec\u6771BIZ \u30c0\u30a4\u30b8\u30a7\u30b9\u30c8",
       "url": "https://www.youtube.com/watch?v=y2fQoDXFqmI",
-      "views": 49382,
+      "views": 49397,
       "comments": 260,
       "published": "2026-08-17T15:17:27Z"
     },
@@ -330,25 +322,16 @@
       "title": "Loving this setup \ud83d\udd25 @radioddity @clockworkpi #hamradio #radiooperator #hamradiolife #antenna #hobby",
       "channel": "Hobby Steve",
       "url": "https://www.youtube.com/watch?v=NSxIFUHNlPY",
-      "views": 46793,
+      "views": 46832,
       "comments": 22,
       "published": "2026-08-19T21:45:46Z"
-    },
-    {
-      "id": "youtube_iPqoo4C5uz0",
-      "title": "Morse Code Practice 20 WPM #hamradio #morsecode #hobby",
-      "channel": "The Radio Zoomer",
-      "url": "https://www.youtube.com/watch?v=iPqoo4C5uz0",
-      "views": 45602,
-      "comments": 2,
-      "published": "2026-08-15T04:44:47Z"
     },
     {
       "id": "youtube_3pdvlneiO0w",
       "title": "Madness: Homebrewed Cell Coverage on Offline Internet!",
       "channel": "The Modern Rogue",
       "url": "https://www.youtube.com/watch?v=3pdvlneiO0w",
-      "views": 34237,
+      "views": 34262,
       "comments": 184,
       "published": "2026-08-19T22:00:21Z"
     },
@@ -366,8 +349,8 @@
       "title": "\u3010\u5f85\u671b\u306e\u65b0\u6a5f\u7a2e\u3011\u65e5\u672c\u5411\u3051\u3000\uff12\uff17\uff2d\uff28\uff5a\u3000\uff23\uff22\u6a5f\u3000\u3064\u3044\u306b\u767a\u58f2\u3000\u30e6\u30cb\u30c7\u30f3\u3055\u3093\u51c4\u3044\u3000\u307b\u307c\u4e8b\u4ef6\u3067\u3059\u306d\u3002\u3000\u3000\u30e9\u30a4\u30bb\u30f3\u30b9\u30d5\u30ea\u30fc\u3000\u30a2\u30de\u30c1\u30e5\u30a2\u7121\u7dda  \u30e6\u30cb\u30c7\u30f3  Uniden CB001RJ",
       "channel": "\u3010\u5b9f\u9a13\u5927\u597d\u304d\uff01\uff01 \uff2d\uff2e\uff2c\u3067\u3059\u3011",
       "url": "https://www.youtube.com/watch?v=1Ki7k0G871k",
-      "views": 32539,
-      "comments": 96,
+      "views": 32547,
+      "comments": 97,
       "published": "2026-08-21T12:15:14Z"
     },
     {
@@ -375,7 +358,7 @@
       "title": "Midland MXT295 Pro GMRS Mobile Radio With Bluetooth Wireless Microphone",
       "channel": "NotaRubicon Productions",
       "url": "https://www.youtube.com/watch?v=fSYyoQKwahk",
-      "views": 32401,
+      "views": 32411,
       "comments": 244,
       "published": "2026-08-20T15:54:43Z"
     },
@@ -384,7 +367,7 @@
       "title": "Car Mount - Meshtastic/Meshcore Harbor Breeze Solar Node - Heltec T096 Build",
       "channel": "HacnCrap",
       "url": "https://www.youtube.com/watch?v=uH46oJE_V88",
-      "views": 30219,
+      "views": 30294,
       "comments": 115,
       "published": "2026-08-18T22:33:28Z"
     },
@@ -393,18 +376,36 @@
       "title": "Ham Radio HF Gear is changing the way we assemble our stations.",
       "channel": "Waters and Stanton",
       "url": "https://www.youtube.com/watch?v=KtdgDHhvG80",
-      "views": 27533,
+      "views": 27635,
       "comments": 106,
       "published": "2026-08-26T09:00:21Z"
+    },
+    {
+      "id": "youtube_UX3q_am4mWM",
+      "title": "FIXED! Choyong WT2 Combo UN-Locked Analog & POC Radio!  POC / Analog POC Wifi/4G Cellular Radio",
+      "channel": "NotaRubicon Productions",
+      "url": "https://www.youtube.com/watch?v=UX3q_am4mWM",
+      "views": 27012,
+      "comments": 121,
+      "published": "2026-08-25T01:31:58Z"
     },
     {
       "id": "youtube_of1_ybQZOkk",
       "title": "Come on! #parksontheair #pota #hamradio # #memes",
       "channel": "N7KOM Mountaintop Portable Radio",
       "url": "https://www.youtube.com/watch?v=of1_ybQZOkk",
-      "views": 25734,
+      "views": 25737,
       "comments": 16,
       "published": "2026-08-20T14:08:45Z"
+    },
+    {
+      "id": "youtube_JE9YzJ0Mdzg",
+      "title": "\u041a\u0440\u0443\u0442\u0430\u044f EH \u0430\u043d\u0442\u0435\u043d\u043d\u0430 #MESHTASTIC \u0437\u0430 \u043a\u043e\u043f\u0435\u0439\u043a\u0438!! \u0421\u0431\u043e\u0440\u043a\u0430 \u0438 \u0437\u0430\u043c\u0435\u0440\u044b!",
+      "channel": "RAZA",
+      "url": "https://www.youtube.com/watch?v=JE9YzJ0Mdzg",
+      "views": 22337,
+      "comments": 17,
+      "published": "2026-08-20T06:46:08Z"
     },
     {
       "id": "youtube_FPIF7LNhODw",
@@ -429,7 +430,7 @@
       "title": "Using Meshtastic As A Tracking Device",
       "channel": "saveitforparts",
       "url": "https://www.youtube.com/watch?v=j6v8bVjrMAQ",
-      "views": 17452,
+      "views": 17489,
       "comments": 117,
       "published": "2026-08-19T23:12:44Z"
     },
@@ -438,7 +439,7 @@
       "title": "Atlavox Solar Node #morsecode #hamradio #meshtastic",
       "channel": "Forrest (KI7QCF)",
       "url": "https://www.youtube.com/watch?v=QGr7dQ1XH5o",
-      "views": 16278,
+      "views": 16292,
       "comments": 16,
       "published": "2026-08-19T22:20:53Z"
     },
@@ -447,16 +448,25 @@
       "title": "Heltec T114 \u043a\u0430\u043a \u043b\u0435\u0433\u043a\u043e \u0443\u0432\u0435\u043b\u0438\u0447\u0438\u0442\u044c \u043f\u0430\u043c\u044f\u0442\u044c!! #meshtastic #meshcore #reticulum #heltec",
       "channel": "RAZA",
       "url": "https://www.youtube.com/watch?v=RuZQQJ6mq70",
-      "views": 14420,
+      "views": 14422,
       "comments": 15,
       "published": "2026-08-16T08:36:23Z"
+    },
+    {
+      "id": "youtube_cFWFQZRu-FY",
+      "title": "Unboxing the @elecrow_official  M5 Node! #offgrid #radiooperator #meshtastic #meshcore",
+      "channel": "Hobby Steve",
+      "url": "https://www.youtube.com/watch?v=cFWFQZRu-FY",
+      "views": 13647,
+      "comments": 5,
+      "published": "2026-08-15T23:03:22Z"
     },
     {
       "id": "youtube_7GEtPGbLzOo",
       "title": "#343 #lifeisbutadream #automobile #icom #basketball #cooking",
       "channel": "Teoksok ICOM",
       "url": "https://www.youtube.com/watch?v=7GEtPGbLzOo",
-      "views": 11648,
+      "views": 11585,
       "comments": 0,
       "published": "2026-08-27T10:19:53Z"
     },
@@ -465,7 +475,7 @@
       "title": "\u3010\u30e2\u30fc\u30d3\u30eb\u6a5f\uff11\uff15\u4e07\u5186\u6642\u4ee3\u3011\uff24\uff0d\uff33\uff34\uff21\uff32\u5bfe\u6c7a\u3000\uff34\uff2d\uff0d\uff24\uff17\uff15\uff10\uff06\uff29\uff24\uff0d\uff15\uff12\uff10\uff10\u3000\u4f55\u51e6\u304c\u9055\u3046\u306e\u304b\uff1f\u3000\u95a2\u30cf\u30e0\u3000KANHAM 2026\u3000\u73fe\u5730\u8abf\u67fb\u3000\u3000#\u30a2\u30de\u30c1\u30e5\u30a2\u7121\u7dda#\u30e2\u30fc\u30d3\u30eb#\u7121\u7dda\u6a5f",
       "channel": "\u3010\u5b9f\u9a13\u5927\u597d\u304d\uff01\uff01 \uff2d\uff2e\uff2c\u3067\u3059\u3011",
       "url": "https://www.youtube.com/watch?v=mpkX_FVJLi4",
-      "views": 11160,
+      "views": 11163,
       "comments": 6,
       "published": "2026-08-17T11:00:31Z"
     },
@@ -474,7 +484,7 @@
       "title": "I Bought The Radio I Used To Make Fun Of",
       "channel": "Real Ham Radio",
       "url": "https://www.youtube.com/watch?v=as8tYtAv5y0",
-      "views": 9635,
+      "views": 9652,
       "comments": 39,
       "published": "2026-08-22T14:29:11Z"
     },
@@ -483,7 +493,7 @@
       "title": "Testing the New Xiegu G7250 home base transceiver",
       "channel": "QRP HF radio",
       "url": "https://www.youtube.com/watch?v=Gz0z-k3z2GM",
-      "views": 9340,
+      "views": 9391,
       "comments": 33,
       "published": "2026-08-22T13:46:07Z"
     },
@@ -492,7 +502,7 @@
       "title": "They Thought My MeshCore Repeater Was a Flock Camera\u2026 So I Fixed It! \ud83d\ude02",
       "channel": "AVERAGE JOE",
       "url": "https://www.youtube.com/watch?v=7MFknqGFajE",
-      "views": 9239,
+      "views": 9262,
       "comments": 78,
       "published": "2026-08-16T16:01:40Z"
     },
@@ -501,7 +511,7 @@
       "title": "\u041e\u0436\u0438\u0432\u0438 \u043c\u0435\u043d\u044f \u0435\u0441\u043b\u0438 \u0441\u043c\u043e\u0436\u0435\u0448\u044c! Yaesu FT-710 \u0438 \u0432\u044b\u0441\u043e\u043a\u043e\u0435 \u043d\u0430\u043f\u0440\u044f\u0436\u0435\u043d\u0438\u0435 (\u04271) - Stuff",
       "channel": "RADIOCHIEF Stuff",
       "url": "https://www.youtube.com/watch?v=08X3VorppQo",
-      "views": 9151,
+      "views": 9152,
       "comments": 104,
       "published": "2026-08-18T05:20:01Z"
     },
@@ -510,25 +520,16 @@
       "title": "Icom ID-5200 - Icom bringt den Wasserfall ins Auto",
       "channel": "DL2YMR",
       "url": "https://www.youtube.com/watch?v=JhfvgF3UJxQ",
-      "views": 8957,
+      "views": 8980,
       "comments": 86,
       "published": "2026-08-23T19:00:34Z"
-    },
-    {
-      "id": "youtube_NLdcoEFQ7ng",
-      "title": "Inside the Huntsville Hamfest: Off-Grid Comms Edition",
-      "channel": "Ham Radio 2.0",
-      "url": "https://www.youtube.com/watch?v=NLdcoEFQ7ng",
-      "views": 8507,
-      "comments": 44,
-      "published": "2026-08-25T19:30:06Z"
     },
     {
       "id": "youtube_zUTixBlqKS8",
       "title": "\u30a2\u30d1\u30de\u30f3430MHz\u30a2\u30de\u30c1\u30e5\u30a2\u7121\u7dda\u904b\u7528\u3067\u30b9\u30ba\u30b3\u30fc\u30eb\u306b\u30c1\u30a7\u30c3\u30af\u30a4\u30f3",
       "channel": "\u3082\u3082\u30c1\u30e3\u30f3\u30cd\u30eb!  \u30a2\u30de\u30c1\u30e5\u30a2\u7121\u7dda&\u30e9\u30a4\u30bb\u30f3\u30b9\u30d5\u30ea\u30fc\u7121\u7dda\u3067\u904a\u3076",
       "url": "https://www.youtube.com/watch?v=zUTixBlqKS8",
-      "views": 6974,
+      "views": 7009,
       "comments": 7,
       "published": "2026-08-26T09:00:38Z"
     },
@@ -546,7 +547,7 @@
       "title": "Yaesu FT-710 \u043f\u043e\u0441\u043b\u0435 50\u0412! \u041f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u0435\u043c \u043e\u0436\u0438\u0432\u043b\u0435\u043d\u0438\u0435 \u0438 \u043f\u0435\u0440\u0435\u0441\u0430\u0436\u0438\u0432\u0430\u0435\u043c \u0441\u0435\u0440\u0434\u0446\u0435 (\u04272) - Stuff",
       "channel": "RADIOCHIEF Stuff",
       "url": "https://www.youtube.com/watch?v=MNK0qIdOXUs",
-      "views": 6615,
+      "views": 6614,
       "comments": 181,
       "published": "2026-08-20T04:01:02Z"
     },
@@ -564,7 +565,7 @@
       "title": "ENTRE DANS LA CAT\u00c9GORIE DES GRANDS B\u00c2TISSEURS.",
       "channel": "iCom TV",
       "url": "https://www.youtube.com/watch?v=jZTRVdVXgTE",
-      "views": 5909,
+      "views": 5908,
       "comments": 62,
       "published": "2026-08-18T12:23:34Z"
     },
@@ -573,9 +574,18 @@
       "title": "Off-Grid Messaging & the DeFlock Movement | Meshtastic, MeshCore + RF Privacy",
       "channel": "HamShack TV",
       "url": "https://www.youtube.com/watch?v=jLImOerGlVg",
-      "views": 5657,
+      "views": 5663,
       "comments": 19,
       "published": "2026-08-21T01:00:22Z"
+    },
+    {
+      "id": "youtube_ah5q42vGU3E",
+      "title": "Amateurfunk News - September 2026",
+      "channel": "DL2YMR",
+      "url": "https://www.youtube.com/watch?v=ah5q42vGU3E",
+      "views": 5484,
+      "comments": 20,
+      "published": "2026-08-28T11:00:28Z"
     },
     {
       "id": "youtube_OVEf7nWYkpo",
@@ -591,7 +601,7 @@
       "title": "Xiegu G7250 Price Tag $949",
       "channel": "Shark Tooth Aerials & Radios",
       "url": "https://www.youtube.com/watch?v=Fsa9j8Yh-tU",
-      "views": 4900,
+      "views": 5011,
       "comments": 28,
       "published": "2026-08-24T00:14:54Z"
     },
@@ -600,7 +610,7 @@
       "title": "Radioddity Xiegu G90. Review + on air testing. How to Mars Mod to 27MHz 11 meters.",
       "channel": "Fred in the Shed",
       "url": "https://www.youtube.com/watch?v=AsTP7XN5yJQ",
-      "views": 4826,
+      "views": 4830,
       "comments": 73,
       "published": "2026-08-15T18:30:26Z"
     },
@@ -609,7 +619,7 @@
       "title": "This $60 ThinkNode M7 LoRa Gateway Runs Meshtastic or MeshCore",
       "channel": "Ryan Adapts",
       "url": "https://www.youtube.com/watch?v=d2jkFG0V7t0",
-      "views": 4329,
+      "views": 4328,
       "comments": 17,
       "published": "2026-08-15T14:58:02Z"
     },
@@ -627,25 +637,16 @@
       "title": "Xiegu G90. Power test and first on real air contacts.  My Conclusion (so far)",
       "channel": "Fred in the Shed",
       "url": "https://www.youtube.com/watch?v=mmonLvm5AFY",
-      "views": 3711,
+      "views": 3706,
       "comments": 57,
       "published": "2026-08-22T18:45:10Z"
-    },
-    {
-      "id": "youtube_4X01zReFmWU",
-      "title": "LoRa, Meshtastic, MQTT\u2026 D\u00e9couvrez le THINKNODE M7 d\u2019Elecrow !",
-      "channel": "F5SVP",
-      "url": "https://www.youtube.com/watch?v=4X01zReFmWU",
-      "views": 3608,
-      "comments": 17,
-      "published": "2026-08-16T12:55:23Z"
     },
     {
       "id": "youtube_te3CfFKNmKw",
       "title": "YAESU\u30cf\u30f3\u30c9\u30de\u30a4\u30af\u554f\u984c\u306f\u3053\u308c\u3067\u89e3\u6c7a\uff01",
       "channel": "\u305f\u304f\u3066\u308c\u3002",
       "url": "https://www.youtube.com/watch?v=te3CfFKNmKw",
-      "views": 3432,
+      "views": 3427,
       "comments": 10,
       "published": "2026-08-19T10:00:04Z"
     },
@@ -654,7 +655,7 @@
       "title": "What Happened to POTA in France?",
       "channel": "LB0FI Norwegian Hamventures",
       "url": "https://www.youtube.com/watch?v=BEOChTC16pk",
-      "views": 3343,
+      "views": 3338,
       "comments": 176,
       "published": "2026-08-16T12:20:00Z"
     },
@@ -681,7 +682,7 @@
       "title": "The Dark Side of the Yaesu FTdx10 and my Rant about it's 30 MHz above performance",
       "channel": "OfficialSWLchannel",
       "url": "https://www.youtube.com/watch?v=x7_VR-0jy7A",
-      "views": 3192,
+      "views": 3202,
       "comments": 22,
       "published": "2026-08-25T03:39:42Z"
     },
@@ -690,7 +691,7 @@
       "title": "POTA Board Statement: Park Eligibility Update for France",
       "channel": "WD4DAN - Front End Overload",
       "url": "https://www.youtube.com/watch?v=Cnz3DxJhZUo",
-      "views": 3132,
+      "views": 3117,
       "comments": 32,
       "published": "2026-08-16T23:23:53Z"
     },
@@ -699,7 +700,7 @@
       "title": "Monte Sano State Park Activation #hamradio #morsecode #parksontheair #hobby #technology",
       "channel": "Radio Roamers",
       "url": "https://www.youtube.com/watch?v=p1XVJyddm34",
-      "views": 3086,
+      "views": 3079,
       "comments": 11,
       "published": "2026-08-22T12:45:46Z"
     },
@@ -708,18 +709,9 @@
       "title": "General Coverage on the ICOM-7300 (#1444)",
       "channel": "David Casler Ask Dave",
       "url": "https://www.youtube.com/watch?v=6WLQPQg8uKQ",
-      "views": 3066,
+      "views": 3067,
       "comments": 6,
       "published": "2026-08-19T21:00:38Z"
-    },
-    {
-      "id": "youtube_gkkXXmSRIpE",
-      "title": "NEW Icom ID-5200 Tested in the UK \ud83c\uddec\ud83c\udde7 | Full Hands-On Review",
-      "channel": "TechJourneyMedia | Discover Tomorrow, Today",
-      "url": "https://www.youtube.com/watch?v=gkkXXmSRIpE",
-      "views": 2937,
-      "comments": 23,
-      "published": "2026-08-17T23:01:30Z"
     },
     {
       "id": "youtube_Bd5IM0hc-Pc",
@@ -735,7 +727,7 @@
       "title": "Yaesu  FTM-310D Sapphire Install: The One Big Problem",
       "channel": "Tank Radio",
       "url": "https://www.youtube.com/watch?v=-7B_YLXpoo8",
-      "views": 2406,
+      "views": 2408,
       "comments": 31,
       "published": "2026-08-17T18:00:16Z"
     },
@@ -744,7 +736,7 @@
       "title": "Move Over POTA? PARC Community Launches Worldwide",
       "channel": "Out N' Aboot With VE9CF",
       "url": "https://www.youtube.com/watch?v=qvqtofGcvlc",
-      "views": 2373,
+      "views": 2375,
       "comments": 98,
       "published": "2026-08-16T22:11:11Z"
     },
@@ -753,7 +745,7 @@
       "title": "SDRplay und FT DX10",
       "channel": "Heinz - just me",
       "url": "https://www.youtube.com/watch?v=tRf6LZOtnFw",
-      "views": 2304,
+      "views": 2313,
       "comments": 22,
       "published": "2026-08-17T06:00:32Z"
     },
@@ -762,9 +754,10 @@
       "title": "Top 10 Things You Need To Know About The Xiegu G7250",
       "channel": "Ham Radio Basics",
       "url": "https://www.youtube.com/watch?v=z7iuDahdgIo",
-      "views": 2047,
+      "views": 2048,
       "comments": 8,
       "published": "2026-08-15T13:00:19Z"
     }
-  ]
+  ],
+  "scoops": []
 }
