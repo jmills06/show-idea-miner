@@ -2,7 +2,11 @@
 """
 Show Idea Miner - Phase 1 (collection + trend tracking, no AI layer yet)
 
-Sources: Reddit (official OAuth API), Hacker News (Algolia), Mastodon hashtags.
+Sources: Reddit (official OAuth API), Hacker News (Algolia), Mastodon hashtags,
+Amateur Radio Stack Exchange, groups.io mailing lists, Discourse forums, and
+forum/blog RSS. YouTube supplies competitive research and the FCC equipment
+authorization database supplies gear scoops; both ride alongside the items
+rather than in the display rotation.
 Filters noise, dedupes against previous runs, tracks term trends over time.
 
 Writes:
@@ -11,15 +15,22 @@ Writes:
   - seen.json             (post IDs already collected, for cross-run dedup)
   - term_history.json     (rolling daily term counts, fuel for trend detection)
 
-Reddit requires repo secrets REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET;
-if absent, Reddit is skipped gracefully. Pure standard library, no installs.
+Every source degrades gracefully: a missing credential, a dead host, or a
+renamed feed logs a warning and the run continues without it. Optional repo
+secrets: REDDIT_CLIENT_ID/REDDIT_CLIENT_SECRET, YOUTUBE_API_KEY,
+STACKEXCHANGE_KEY. Pure standard library, no installs.
+
+Run a single collector without writing anything:
+    python scripts/mine_ideas.py --only=stackexchange
 """
 
 import base64
+import gzip
 import hashlib
 import json
 import os
 import re
+import sys
 import time
 import html as html_lib
 import urllib.request
@@ -89,7 +100,54 @@ RSS_FEEDS = [
 ]
 RSS_DAYS_BACK = 7            # ignore entries older than this
 
-MAX_TOTAL_ITEMS = 60
+# --- Amateur Radio Stack Exchange (questions are pain points are show topics) ---
+# No key needed under 300 requests/day per IP. Set the STACKEXCHANGE_KEY repo
+# secret to raise that to 10,000/day if the shared Actions IPs run dry.
+STACKEXCHANGE_SITES = ["ham"]
+STACKEXCHANGE_DAYS_BACK = 14
+STACKEXCHANGE_PAGESIZE = 50
+STACKEXCHANGE_MIN_VIEWS = 30   # skip questions nobody has even looked at
+
+# --- groups.io mailing lists ---
+# Slugs are the part after groups.io/g/. Public groups only: a private or
+# misspelled group logs a failure and is skipped, so prune from the Action log.
+GROUPS_IO_FEED = "https://groups.io/g/{group}/rss"
+GROUPS_IO_GROUPS = [
+    "Elecraft",
+    "QRPLabs",
+    "Xiegu",
+    "sBitx",
+    "BITX20",
+    "TAPR",
+]
+GROUPS_IO_DAYS_BACK = 7
+GROUPS_IO_MIN_MESSAGES = 1     # 1 keeps every thread; raise to demand replies
+
+# --- Discourse forums (any Discourse site exposes /latest.json, no key) ---
+DISCOURSE_SITES = [
+    ("GNU Radio", "https://discourse.gnuradio.org"),
+    ("Meshtastic", "https://meshtastic.discourse.group"),
+    ("Digirig", "https://forum.digirig.net"),
+]
+DISCOURSE_DAYS_BACK = 14
+DISCOURSE_MIN_REPLIES = 2      # a topic must clear replies OR views, not both
+DISCOURSE_MIN_VIEWS = 100
+
+# --- FCC equipment authorizations (scoops, not discussion) ---
+# New radios are type-certified here before the manufacturer announces them.
+# The OET search only returns HTML, so collect_fcc parses defensively; see the
+# comment above it before tuning.
+FCC_ENABLED = True
+FCC_SEARCH_URL = "https://apps.fcc.gov/oetcf/eas/reports/GenericSearchResult.cfm"
+FCC_APPLICANTS = [
+    "Icom", "Yaesu", "Kenwood", "Alinco", "Xiegu",
+    "Elecraft", "FlexRadio", "Anytone", "Retevis", "Radioddity",
+]
+FCC_DAYS_BACK = 45
+FCC_MAX_PER_APPLICANT = 6
+
+MAX_TOTAL_ITEMS = 80
+MAX_PER_SOURCE = 18          # keeps one chatty feed from filling the batch
 SEEN_RETENTION_DAYS = 45
 REQUEST_TIMEOUT = 20
 RETRIES = 3
@@ -137,20 +195,37 @@ TERM_HISTORY_FILE = ROOT / "term_history.json"
 # HTTP helper with retries
 # ----------------------------------------------------------------------
 
-def fetch_json(url, headers=None, data=None):
-    hdrs = {"User-Agent": USER_AGENT}
+def fetch_bytes(url, headers=None, data=None, label=None):
+    """Fetch raw bytes with retries, transparently gunzipping the reply.
+    Stack Exchange always gzips; urllib does not decompress on its own."""
+    hdrs = {"User-Agent": USER_AGENT, "Accept-Encoding": "gzip"}
     if headers:
         hdrs.update(headers)
     for attempt in range(1, RETRIES + 1):
         try:
             req = urllib.request.Request(url, headers=hdrs, data=data)
             with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
-                return json.loads(resp.read().decode("utf-8"))
+                raw = resp.read()
+            if raw[:2] == b"\x1f\x8b":
+                raw = gzip.decompress(raw)
+            return raw
         except Exception as e:
-            print(f"  [warn] attempt {attempt}/{RETRIES} failed for {url}: {e}")
+            print(f"  [warn] attempt {attempt}/{RETRIES} failed for "
+                  f"{label or url}: {e}")
             if attempt < RETRIES:
                 time.sleep(RETRY_WAIT)
     return None
+
+
+def fetch_json(url, headers=None, data=None):
+    raw = fetch_bytes(url, headers=headers, data=data)
+    if raw is None:
+        return None
+    try:
+        return json.loads(raw.decode("utf-8"))
+    except Exception as e:
+        print(f"  [warn] unparseable JSON from {url}: {e}")
+        return None
 
 # ----------------------------------------------------------------------
 # Collectors
@@ -364,40 +439,89 @@ def collect_youtube():
     return results
 
 # ----------------------------------------------------------------------
-# Forum / blog RSS feeds
+# Feed parsing (shared by the blog RSS feeds and the groups.io lists)
 # ----------------------------------------------------------------------
 
 WP_BOILERPLATE = re.compile(r"The post .{0,200}? appeared first on .{0,100}?\.",
                             re.IGNORECASE | re.DOTALL)
 
+
+def _local(tag):
+    """ElementTree keeps the namespace on the tag; we want the local name."""
+    return str(tag).rsplit("}", 1)[-1]
+
+
+def _entry_text(node, *names):
+    for child in node:
+        if _local(child.tag) in names:
+            text = (child.text or "").strip()
+            if text:
+                return text
+    return ""
+
+
+def _entry_link(node):
+    for child in node:
+        if _local(child.tag) != "link":
+            continue
+        href = (child.get("href") or "").strip()      # Atom
+        if href:
+            return href
+        if (child.text or "").strip():                # RSS 2.0
+            return child.text.strip()
+    return ""
+
+
+def parse_feed_date(value):
+    """Feeds date entries RFC 2822 (RSS) or ISO 8601 (Atom)."""
+    if value:
+        try:
+            return parsedate_to_datetime(value).timestamp()
+        except Exception:
+            pass
+        iso = parse_iso(value)
+        if iso:
+            return float(iso)
+    return time.time()          # undated entries assumed fresh
+
+
+def parse_feed(raw):
+    """Yield (title, link, description, timestamp) from RSS or Atom bytes."""
+    root = ET.fromstring(raw)
+    for node in root.iter():
+        if _local(node.tag) not in ("item", "entry"):
+            continue
+        title = html_lib.unescape(_entry_text(node, "title")).strip()
+        link = _entry_link(node)
+        desc = strip_html(_entry_text(node, "description", "summary",
+                                      "content", "encoded"))
+        ts = parse_feed_date(_entry_text(node, "pubDate", "published",
+                                         "updated", "date"))
+        yield title, link, desc.strip(), ts
+
+
 def collect_rss():
     items = []
     cutoff = time.time() - RSS_DAYS_BACK * 86400
     for name, url in RSS_FEEDS:
-        kept = 0
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-            with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
-                root = ET.fromstring(resp.read())
-        except Exception as e:
-            print(f"[rss] {name} ... failed: {e}")
+        raw = fetch_bytes(url, label=f"{name} feed")
+        if raw is None:
+            print(f"[rss] {name} ... failed")
             continue
-        for entry in root.iter("item"):  # RSS 2.0
-            title = (entry.findtext("title") or "").strip()
-            link = (entry.findtext("link") or "").strip()
-            desc = strip_html(entry.findtext("description") or "")
+        try:
+            entries = list(parse_feed(raw))
+        except Exception as e:
+            print(f"[rss] {name} ... unparseable: {e}")
+            continue
+        kept = 0
+        for title, link, desc, ts in entries:
             desc = WP_BOILERPLATE.sub("", desc).strip()
-            pub = entry.findtext("pubDate") or ""
-            try:
-                ts = parsedate_to_datetime(pub).timestamp()
-            except Exception:
-                ts = time.time()  # undated entries assumed fresh
             if ts < cutoff or not title or not link:
                 continue
             items.append({
                 "id": "rss_" + hashlib.md5(link.encode()).hexdigest()[:12],
                 "source": name,
-                "title": html_lib.unescape(title),
+                "title": title,
                 "url": link,
                 "score": 0,
                 "comments": 0,
@@ -409,6 +533,265 @@ def collect_rss():
         time.sleep(1)
     print(f"[rss] total kept: {len(items)} (pre-dedup)")
     return items
+
+# ----------------------------------------------------------------------
+# groups.io mailing lists
+# ----------------------------------------------------------------------
+
+LIST_TAG_RE = re.compile(r"^\s*\[[^\]]{1,40}\]\s*")
+REPLY_PREFIX_RE = re.compile(r"^\s*(?:re|fwd|fw|aw)\s*:\s*", re.IGNORECASE)
+
+
+def thread_subject(title):
+    """Collapse '[Elecraft] Re: KX3 noise' and 'Re: KX3 noise' onto one thread."""
+    previous = None
+    while previous != title:
+        previous = title
+        title = LIST_TAG_RE.sub("", title)
+        title = REPLY_PREFIX_RE.sub("", title)
+    return " ".join(title.split())
+
+
+def collect_groups_io():
+    """Mailing list traffic, collapsed so one thread is one item and the
+    reply count becomes the engagement signal."""
+    items = []
+    cutoff = time.time() - GROUPS_IO_DAYS_BACK * 86400
+    for group in GROUPS_IO_GROUPS:
+        raw = fetch_bytes(GROUPS_IO_FEED.format(group=group),
+                          label=f"groups.io/{group}")
+        if raw is None:
+            print(f"[groups.io] {group} ... failed (private group or bad slug?)")
+            continue
+        try:
+            entries = list(parse_feed(raw))
+        except Exception as e:
+            print(f"[groups.io] {group} ... unparseable: {e}")
+            continue
+        threads = {}
+        for title, link, desc, ts in entries:
+            if ts < cutoff or not title or not link:
+                continue
+            subject = thread_subject(title)
+            if not subject:
+                continue
+            key = subject.lower()
+            thread = threads.get(key)
+            if thread is None:
+                threads[key] = {"subject": subject, "link": link,
+                                "blurb": desc, "ts": ts, "messages": 1}
+                continue
+            thread["messages"] += 1
+            if ts < thread["ts"]:              # keep the thread opener
+                thread["ts"] = ts
+                thread["link"] = link
+                if desc:
+                    thread["blurb"] = desc
+        kept = 0
+        for key, thread in threads.items():
+            if thread["messages"] < GROUPS_IO_MIN_MESSAGES:
+                continue
+            # The id carries a coarse activity bucket so a thread resurfaces
+            # once it picks up real traction, instead of being permanently
+            # suppressed by seen.json after its very first message.
+            bucket = min(thread["messages"] // 5, 20)
+            digest = hashlib.md5(f"{group}:{key}".encode()).hexdigest()[:10]
+            items.append({
+                "id": f"groupsio_{digest}_{bucket}",
+                "source": f"groups.io · {group}",
+                "title": thread["subject"],
+                "url": thread["link"],
+                "score": thread["messages"],
+                "comments": max(thread["messages"] - 1, 0),
+                "created_utc": int(thread["ts"]),
+                "blurb": truncate_words(thread["blurb"], 220),
+            })
+            kept += 1
+        print(f"[groups.io] {group} ... {len(entries)} messages, "
+              f"{kept} threads kept")
+        time.sleep(1)
+    print(f"[groups.io] total kept: {len(items)} (pre-dedup)")
+    return items
+
+# ----------------------------------------------------------------------
+# Discourse forums
+# ----------------------------------------------------------------------
+
+def collect_discourse():
+    items = []
+    cutoff = time.time() - DISCOURSE_DAYS_BACK * 86400
+    for name, base in DISCOURSE_SITES:
+        base = base.rstrip("/")
+        data = fetch_json(f"{base}/latest.json?order=created")
+        topics = ((data or {}).get("topic_list") or {}).get("topics") or []
+        if not topics:
+            print(f"[discourse] {name} ... no topics returned "
+                  f"(login-only site, or not a Discourse forum?)")
+            continue
+        site_key = hashlib.md5(base.encode()).hexdigest()[:6]
+        kept = 0
+        for topic in topics:
+            if topic.get("pinned"):
+                continue
+            ts = parse_iso(topic.get("created_at") or "")
+            if not ts or ts < cutoff:
+                continue
+            replies = topic.get("reply_count")
+            if replies is None:
+                replies = max((topic.get("posts_count") or 1) - 1, 0)
+            views = topic.get("views") or 0
+            if replies < DISCOURSE_MIN_REPLIES and views < DISCOURSE_MIN_VIEWS:
+                continue
+            title = html_lib.unescape((topic.get("title") or "").strip())
+            if not title:
+                continue
+            items.append({
+                "id": f"discourse_{site_key}_{topic.get('id')}",
+                "source": f"Discourse · {name}",
+                "title": title,
+                "url": f"{base}/t/{topic.get('slug') or 'topic'}/{topic.get('id')}",
+                "score": topic.get("like_count") or 0,
+                "comments": replies,
+                "views": views,
+                "created_utc": int(ts),
+                "blurb": truncate_words(strip_html(topic.get("excerpt") or ""), 220),
+            })
+            kept += 1
+        print(f"[discourse] {name} ... {len(topics)} topics, kept {kept}")
+        time.sleep(1)
+    print(f"[discourse] total kept: {len(items)} (pre-dedup)")
+    return items
+
+# ----------------------------------------------------------------------
+# Amateur Radio Stack Exchange
+# ----------------------------------------------------------------------
+
+def collect_stackexchange():
+    items = []
+    key = os.environ.get("STACKEXCHANGE_KEY", "")
+    fromdate = int(time.time() - STACKEXCHANGE_DAYS_BACK * 86400)
+    for site in STACKEXCHANGE_SITES:
+        params = {
+            "site": site,
+            "order": "desc",
+            "sort": "creation",
+            "fromdate": fromdate,
+            "pagesize": STACKEXCHANGE_PAGESIZE,
+            "filter": "withbody",
+        }
+        if key:
+            params["key"] = key
+        data = fetch_json("https://api.stackexchange.com/2.3/questions?"
+                          + urllib.parse.urlencode(params))
+        questions = (data or {}).get("items")
+        if questions is None:
+            print(f"[stackexchange] {site} ... request failed: "
+                  f"{(data or {}).get('error_message', 'no data')}")
+            continue
+        kept = 0
+        for q in questions:
+            views = q.get("view_count") or 0
+            title = html_lib.unescape((q.get("title") or "").strip())
+            if views < STACKEXCHANGE_MIN_VIEWS or not title:
+                continue
+            items.append({
+                "id": f"se_{site}_{q.get('question_id')}",
+                "source": f"Stack Exchange ({site})",
+                "title": title,
+                "url": q.get("link") or "",
+                "score": q.get("score") or 0,
+                "comments": q.get("answer_count") or 0,
+                "views": views,
+                "created_utc": int(q.get("creation_date") or 0),
+                "blurb": truncate_words(strip_html(q.get("body") or ""), 220),
+            })
+            kept += 1
+        print(f"[stackexchange] {site} ... {len(questions)} questions, "
+              f"kept {kept}, quota left {(data or {}).get('quota_remaining', '?')}")
+        time.sleep(1)
+    print(f"[stackexchange] total kept: {len(items)} (pre-dedup)")
+    return items
+
+# ----------------------------------------------------------------------
+# FCC equipment authorizations
+#
+# New radios are type-certified here before the manufacturer announces them,
+# which makes this a scoop feed rather than a discussion feed: results go to
+# the "scoops" block, not into the display rotation.
+#
+# The OET generic search only returns HTML, so the parse below is deliberately
+# tolerant: it treats any table row containing an MM/DD/YYYY date as a grant
+# row and picks the FCC ID out of the cells. If a run logs "bytes fetched, no
+# grant rows parsed", the query parameters or the result table layout are what
+# changed; adjust FCC_SEARCH_URL and the params in collect_fcc.
+# ----------------------------------------------------------------------
+
+FCC_ROW_RE = re.compile(r"<tr[^>]*>(.*?)</tr>", re.IGNORECASE | re.DOTALL)
+FCC_CELL_RE = re.compile(r"<t[dh][^>]*>(.*?)</t[dh]>", re.IGNORECASE | re.DOTALL)
+FCC_HREF_RE = re.compile(r'href\s*=\s*"([^"]+)"', re.IGNORECASE)
+FCC_DATE_RE = re.compile(r"\b\d{2}/\d{2}/\d{4}\b")
+FCC_ID_RE = re.compile(r"^[A-Z0-9][A-Z0-9\-]{3,17}$")
+
+
+def collect_fcc():
+    if not FCC_ENABLED:
+        return []
+    results, seen_fcc_ids = [], set()
+    now = datetime.now(timezone.utc)
+    date_to = now.strftime("%m/%d/%Y")
+    date_from = datetime.fromtimestamp(
+        now.timestamp() - FCC_DAYS_BACK * 86400,
+        tz=timezone.utc).strftime("%m/%d/%Y")
+    for applicant in FCC_APPLICANTS:
+        params = urllib.parse.urlencode({
+            "RequestTimeout": "500",
+            "calledFromFrame": "N",
+            "applicant_name": applicant,
+            "grant_date_from": date_from,
+            "grant_date_to": date_to,
+        })
+        raw = fetch_bytes(f"{FCC_SEARCH_URL}?{params}", label=f"FCC {applicant}")
+        if raw is None:
+            print(f"[fcc] {applicant} ... request failed")
+            continue
+        page = raw.decode("utf-8", "replace")
+        kept = 0
+        for row_html in FCC_ROW_RE.findall(page):
+            cells = [strip_html(c) for c in FCC_CELL_RE.findall(row_html)]
+            row_text = " ".join(c for c in cells if c)
+            granted = FCC_DATE_RE.search(row_text)
+            if not granted:
+                continue          # header, layout, or navigation row
+            fcc_id = next((c.replace(" ", "") for c in cells
+                           if FCC_ID_RE.match(c.replace(" ", ""))), "")
+            if not fcc_id or fcc_id in seen_fcc_ids:
+                continue
+            seen_fcc_ids.add(fcc_id)
+            href = next((h for h in FCC_HREF_RE.findall(row_html)
+                         if "application_id" in h.lower()), "")
+            if href.startswith("/"):
+                href = "https://apps.fcc.gov" + href
+            elif href and not href.lower().startswith("http"):
+                href = "https://apps.fcc.gov/oetcf/eas/reports/" + href
+            results.append({
+                "id": f"fcc_{fcc_id}",
+                "applicant": applicant,
+                "fcc_id": fcc_id,
+                "grant_date": granted.group(0),
+                "detail": truncate_words(row_text, 200),
+                "url": href or f"{FCC_SEARCH_URL}?{params}",
+            })
+            kept += 1
+            if kept >= FCC_MAX_PER_APPLICANT:
+                break
+        if kept:
+            print(f"[fcc] {applicant} ... {kept} grants")
+        else:
+            print(f"[fcc] {applicant} ... {len(page)} bytes fetched, "
+                  f"no grant rows parsed")
+        time.sleep(2)
+    print(f"[fcc] total grants: {len(results)}")
+    return results
 
 # ----------------------------------------------------------------------
 # Trend tracking
@@ -468,7 +851,7 @@ def load_json(path, default):
     return default
 
 
-def update_term_history(fresh_items, today):
+def update_term_history(fresh_items, today, write=True):
     """Record today's term counts and prune old days."""
     history = load_json(TERM_HISTORY_FILE, {})
     counts = {}
@@ -488,9 +871,10 @@ def update_term_history(fresh_items, today):
     history = {d: c for d, c in history.items()
                if datetime.strptime(d, "%Y-%m-%d")
                   .replace(tzinfo=timezone.utc).timestamp() >= cutoff}
-    TERM_HISTORY_FILE.write_text(json.dumps(history, indent=2))
-    TERM_HISTORY_FILE.with_name("term_casing.json").write_text(
-        json.dumps(casing, indent=2))
+    if write:
+        TERM_HISTORY_FILE.write_text(json.dumps(history, indent=2))
+        TERM_HISTORY_FILE.with_name("term_casing.json").write_text(
+            json.dumps(casing, indent=2))
     return history, casing
 
 
@@ -574,18 +958,104 @@ def save_seen(seen):
         {k: v for k, v in seen.items() if v >= cutoff}, indent=2))
 
 # ----------------------------------------------------------------------
+# Ranking and source balancing
+# ----------------------------------------------------------------------
+
+def rank_key(item):
+    """Comments outrank points. Views are a weak tiebreaker for the sources
+    that report them, so a heavily read but unanswered Stack Exchange
+    question (exactly the kind of gap worth an episode) can still surface."""
+    return (item.get("comments", 0) * 2 + item.get("score", 0)
+            + (item.get("views", 0) or 0) / 100.0)
+
+
+def source_bucket(source):
+    """'Mastodon #sota' and 'groups.io · Elecraft' collapse to one bucket each,
+    so a chatty feed cannot crowd every other source out of the batch."""
+    return source.split(" · ")[0].split(" #")[0].strip() or source
+
+
+def balance_sources(items):
+    """Take the best of every source in turn rather than the global top N."""
+    buckets = {}
+    for item in items:
+        buckets.setdefault(source_bucket(item.get("source", "?")), []).append(item)
+    for bucket in buckets.values():
+        bucket.sort(key=rank_key, reverse=True)
+
+    picked, depth = [], 0
+    while len(picked) < MAX_TOTAL_ITEMS and depth < MAX_PER_SOURCE:
+        added = False
+        for bucket in buckets.values():
+            if depth < len(bucket):
+                picked.append(bucket[depth])
+                added = True
+                if len(picked) >= MAX_TOTAL_ITEMS:
+                    break
+        if not added:
+            break
+        depth += 1
+
+    picked.sort(key=rank_key, reverse=True)
+    if picked:
+        tally = {}
+        for item in picked:
+            name = source_bucket(item.get("source", "?"))
+            tally[name] = tally.get(name, 0) + 1
+        print("[balance] " + ", ".join(f"{k}:{v}" for k, v in sorted(tally.items())))
+    return picked
+
+# ----------------------------------------------------------------------
 # Main
 # ----------------------------------------------------------------------
 
+COLLECTORS = [
+    ("reddit", collect_reddit),
+    ("hn", collect_hackernews),
+    ("mastodon", collect_mastodon),
+    ("stackexchange", collect_stackexchange),
+    ("groupsio", collect_groups_io),
+    ("discourse", collect_discourse),
+    ("rss", collect_rss),
+]
+EXTRA_COLLECTORS = ("youtube", "fcc")
+
+
+def parse_args(argv):
+    """--only=rss,fcc runs just those collectors. It never writes, so a
+    single source can be debugged from the Action log without disturbing
+    ideas.json, seen.json, or the term history."""
+    only = set()
+    for arg in argv:
+        if arg.startswith("--only="):
+            only = {s.strip().lower() for s in arg[7:].split(",") if s.strip()}
+        else:
+            print(f"[args] ignoring unknown argument: {arg}")
+    known = {name for name, _ in COLLECTORS} | set(EXTRA_COLLECTORS)
+    for name in sorted(only - known):
+        print(f"[args] warning: '{name}' is not a known collector "
+              f"({', '.join(sorted(known))})")
+    return only
+
+
 def main():
     print("=== Show Idea Miner: Phase 1 collection run ===")
+    only = parse_args(sys.argv[1:])
+    dry_run = bool(only)
+    if only:
+        print(f"[args] running only: {', '.join(sorted(only))} (dry run)")
+
     seen = load_json(SEEN_FILE, {})
     now = time.time()
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-    raw = (collect_reddit() + collect_hackernews()
-           + collect_mastodon() + collect_rss())
-    competitive = collect_youtube()
+    raw = []
+    for name, collector in COLLECTORS:
+        if only and name not in only:
+            continue
+        raw.extend(collector())
+    competitive = collect_youtube() if not only or "youtube" in only else []
+    scoops = collect_fcc() if not only or "fcc" in only else []
 
     # Dedup within this batch
     by_id = {}
@@ -600,10 +1070,11 @@ def main():
 
     for i in batch:
         seen[i["id"]] = now
-    save_seen(seen)
+    if not dry_run:
+        save_seen(seen)
 
     # Trends: record today's terms, then compute movers
-    history, casing = update_term_history(fresh, today)
+    history, casing = update_term_history(fresh, today, write=not dry_run)
     trends = compute_trends(history, casing)
     if trends:
         print("[trends] top movers: "
@@ -612,9 +1083,8 @@ def main():
     else:
         print("[trends] not enough history yet (needs a few days of runs)")
 
-    # Rank items: comments weighted over score
-    fresh.sort(key=lambda i: i["comments"] * 2 + i["score"], reverse=True)
-    fresh = fresh[:MAX_TOTAL_ITEMS]
+    # Rank items, giving every source a fair share of the batch
+    fresh = balance_sources(fresh)
 
     # If nothing new came in, keep showing the previous batch
     if not fresh:
@@ -630,7 +1100,13 @@ def main():
         "items": fresh,
         "trends": trends,
         "competitive": competitive,
+        "scoops": scoops,
     }
+
+    if dry_run:
+        print(f"[dry-run] {len(fresh)} items, {len(trends)} trends, "
+              f"{len(competitive)} videos, {len(scoops)} scoops; nothing written")
+        return
 
     if not fresh and not trends:
         print("[warn] empty batch; leaving existing ideas.json untouched")
@@ -639,7 +1115,8 @@ def main():
     IDEAS_FILE.write_text(json.dumps(output, indent=2))
     ARCHIVE_DIR.mkdir(exist_ok=True)
     (ARCHIVE_DIR / f"{today}.json").write_text(json.dumps(output, indent=2))
-    print(f"[done] wrote {len(fresh)} items and {len(trends)} trends")
+    print(f"[done] wrote {len(fresh)} items, {len(trends)} trends, "
+          f"{len(scoops)} FCC grants")
 
 
 if __name__ == "__main__":

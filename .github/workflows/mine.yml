@@ -26,6 +26,9 @@ jobs:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          # Optional: raises the Stack Exchange quota from 300 to 10,000
+          # requests/day. The collector works without it.
+          STACKEXCHANGE_KEY: ${{ secrets.STACKEXCHANGE_KEY }}
         run: python scripts/mine_ideas.py
 
       - name: Commit results
