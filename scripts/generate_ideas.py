@@ -3,6 +3,7 @@
 Show Idea Miner - Phase 2 (Claude idea generation)
 
 Reads the past week of mined items from ideas/ plus current trends,
+competitive YouTube research, and recent FCC equipment authorizations,
 sends them to the Claude API, and produces refined episode pitches.
 
 Writes:
@@ -110,7 +111,8 @@ def gather_week_of_items():
                 if item.get("id") and item.get("title"):
                     by_id[item["id"]] = item
     items = list(by_id.values())
-    items.sort(key=lambda i: (i.get("comments", 0) * 2 + i.get("score", 0)),
+    items.sort(key=lambda i: (i.get("comments", 0) * 2 + i.get("score", 0)
+                              + (i.get("views", 0) or 0) / 100.0),
                reverse=True)
     return items[:MAX_ITEMS_TO_SEND]
 
@@ -126,7 +128,7 @@ def gather_previous_titles():
     return titles
 
 
-def build_user_prompt(items, trends, previous_titles, competitive):
+def build_user_prompt(items, trends, previous_titles, competitive, scoops):
     lines = ["## Trending terms this week (term: recent mentions, velocity)"]
     if trends:
         for t in trends:
@@ -144,6 +146,15 @@ def build_user_prompt(items, trends, previous_titles, competitive):
             lines.append(f"- \"{v.get('title','')}\" by {v.get('channel','?')}: "
                          f"{v.get('views',0):,} views, "
                          f"{v.get('comments',0):,} comments")
+
+    if scoops:
+        lines.append("\n## New FCC equipment authorizations"
+                     "\n(gear certified in the last few weeks, often before the"
+                     " manufacturer announces it: a scoop angle, but confirm"
+                     " before treating a filing as a product)")
+        for s in scoops[:12]:
+            lines.append(f"- {s.get('applicant', '?')} filing {s.get('fcc_id', '?')}"
+                         f", granted {s.get('grant_date', '?')}: {s.get('url', '')}")
 
     if previous_titles:
         lines.append("\n## Ideas already pitched in recent batches (avoid repeats)")
@@ -261,9 +272,10 @@ def main():
     latest = load_json(IDEAS_FILE, {})
     trends = latest.get("trends", [])
     competitive = latest.get("competitive", [])
+    scoops = latest.get("scoops", [])
     previous_titles = gather_previous_titles()
     print(f"[gather] {len(items)} items, {len(trends)} trends, "
-          f"{len(competitive)} competitive videos, "
+          f"{len(competitive)} competitive videos, {len(scoops)} FCC grants, "
           f"{len(previous_titles)} previous titles")
 
     if not items:
@@ -271,7 +283,8 @@ def main():
         return
 
     system_prompt = SYSTEM_PROMPT.format(ideas_requested=IDEAS_REQUESTED)
-    user_prompt = build_user_prompt(items, trends, previous_titles, competitive)
+    user_prompt = build_user_prompt(items, trends, previous_titles,
+                                   competitive, scoops)
     text = call_claude(system_prompt, user_prompt)
     ideas = parse_ideas(text)
 
